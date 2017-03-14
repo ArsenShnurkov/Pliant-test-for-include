@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <ProjectGuid>{0AC25070-0792-4770-8F3F-11056ABE33F4}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>main</RootNamespace>
+    <RootNamespace>DefaultNamespaceName</RootNamespace>
     <AssemblyName>main</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
   </PropertyGroup>
@@ -37,6 +37,12 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Grammar\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Grammar\syntax1.ebnf" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
