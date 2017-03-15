@@ -30,9 +30,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="Pliant, Version=0.4.2.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756">
-      <Package>pliant-0.4.2.1</Package>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Program.cs" />
@@ -43,6 +40,13 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Grammar\syntax1.ebnf" />
+    <EmbeddedResource Include="Grammar\syntax2.ebnf" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Pliant.git\libraries\Pliant\Pliant.csproj">
+      <Project>{5C23805F-0FFC-4039-B853-E5ACBE63A3C0}</Project>
+      <Name>Pliant</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -11,10 +11,11 @@ class DefaultNamespaceName
 {
 	public static void Main(string[] args)
 	{
-		string grammarText = LoadFromResource(nameof(DefaultNamespaceName), "Grammar", "syntax1.ebnf");
-		string input = File.ReadAllText("/etc/apache2/httpd.conf", Encoding.UTF8);
+		string grammarText = LoadFromResource(nameof(DefaultNamespaceName), "Grammar", "syntax2.ebnf");
+		//string input = File.ReadAllText("/etc/apache2/httpd.conf", Encoding.UTF8);
+		string input = "_0_1_0_0_1_1_";
 
-		var definition = new EbnfParser().Parse(grammarText);
+ 		var definition = new EbnfParser().Parse(grammarText);
 		var grammar = new EbnfGrammarGenerator().Generate(definition);
 		var parseEngine = new ParseEngine(grammar);
 		var parseRunner = new ParseRunner(parseEngine, input);
