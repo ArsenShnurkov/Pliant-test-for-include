@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "main", "main\main.csproj", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pliant", "..\Pliant.git\libraries\Pliant\Pliant.csproj", "{5C23805F-0FFC-4039-B853-E5ACBE63A3C0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eto.Parse", "..\Eto.Parse.git\Eto.Parse\Eto.Parse.csproj", "{C068996C-0949-4550-B21C-EF724D1894DA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -19,5 +21,9 @@ Global
 		{5C23805F-0FFC-4039-B853-E5ACBE63A3C0}.Debug|x86.Build.0 = Debug|Any CPU
 		{5C23805F-0FFC-4039-B853-E5ACBE63A3C0}.Release|x86.ActiveCfg = Release|Any CPU
 		{5C23805F-0FFC-4039-B853-E5ACBE63A3C0}.Release|x86.Build.0 = Release|Any CPU
+		{C068996C-0949-4550-B21C-EF724D1894DA}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{C068996C-0949-4550-B21C-EF724D1894DA}.Debug|x86.Build.0 = Debug|Any CPU
+		{C068996C-0949-4550-B21C-EF724D1894DA}.Release|x86.ActiveCfg = Release|Any CPU
+		{C068996C-0949-4550-B21C-EF724D1894DA}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

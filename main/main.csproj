@@ -32,8 +32,8 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Eto.Parse.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Grammar\" />
@@ -41,12 +41,19 @@
   <ItemGroup>
     <EmbeddedResource Include="Grammar\syntax1.ebnf" />
     <EmbeddedResource Include="Grammar\syntax2.ebnf" />
+    <EmbeddedResource Include="Grammar\syntax3.ebnf" />
+    <EmbeddedResource Include="Grammar\syntax4.ebnf" />
+    <EmbeddedResource Include="Grammar\syntax5.ebnf" />
+    <EmbeddedResource Include="Grammar\syntax6.ebnf" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Pliant.git\libraries\Pliant\Pliant.csproj">
-      <Project>{5C23805F-0FFC-4039-B853-E5ACBE63A3C0}</Project>
-      <Name>Pliant</Name>
+    <ProjectReference Include="..\..\Eto.Parse.git\Eto.Parse\Eto.Parse.csproj">
+      <Project>{C068996C-0949-4550-B21C-EF724D1894DA}</Project>
+      <Name>Eto.Parse</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Pliant.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

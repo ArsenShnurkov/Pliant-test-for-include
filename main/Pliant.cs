@@ -11,9 +11,9 @@ class DefaultNamespaceName
 {
 	public static void Main(string[] args)
 	{
-		string grammarText = LoadFromResource(nameof(DefaultNamespaceName), "Grammar", "syntax2.ebnf");
+		string grammarText = LoadFromResource(nameof(DefaultNamespaceName), "Grammar", "syntax5.ebnf");
 		//string input = File.ReadAllText("/etc/apache2/httpd.conf", Encoding.UTF8);
-		string input = "_0_1_0_0_1_1_";
+		string input = "1 1";
 
  		var definition = new EbnfParser().Parse(grammarText);
 		var grammar = new EbnfGrammarGenerator().Generate(definition);

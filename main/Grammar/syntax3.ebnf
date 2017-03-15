@@ -1,0 +1,9 @@
+﻿file = ws directives ws ;
+
+ws = [ ows ] ; /* white space */
+
+ows = " " ; /* obligatory white space */
+
+directives = directive | directive ows directives ;
+
+directive = "0" | "1" ;

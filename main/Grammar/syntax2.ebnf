@@ -2,7 +2,7 @@
 
 ws = [ ows ] ; /* white space */
 
-ows = "_" ; /* obligatory white space */
+ows = "\u0020" ; /* obligatory white space */
 
 directives = directive { ows directive } ;
 
