@@ -1,4 +1,4 @@
-﻿file := ws , include_directive , { ows , include_directive } , ws;
+﻿file := ws , [ include_directive , { ows , include_directive } , ws ] ;
 
 include_directive := include_keyword , iws , include_path ;
 include_keyword := ("i" | "I") , ("n" | "N") , ("c" | "C") , ("l" | "L") , ("u" | "U") , ("d" | "D") , ("e" | "E") ;
@@ -9,9 +9,10 @@ other_directive := other_keyword, { other_directive_fragment } ;
 other_keyword := ( other_directive_fragment - iws, { other_directive_fragment - iws} ) - include_keyword ;
 other_directive_fragment  := ac - ( cr | lf ) ;
 
-part_of_path := start_of_path , { body_of_path } ;
-start_of_path := letter | dot | asterisk ;
-body_of_path := letter_or_digit | dot | asterisk ;
+part_of_path := start_of_path , { body_of_path } , end_of_path ;
+start_of_path := body_of_path ;
+body_of_path := ac - ( slash | backslash | iws | newline ) ;
+end_of_path := (* empty rule *) ; 
 
 ws := [ ows ] ; (* white space *)
 ows := ows_element , { ows_element } ; (* obligatory white space *)
