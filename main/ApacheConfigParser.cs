@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -84,7 +85,8 @@ class DefaultNamespaceName
 	{
 		try
 		{
-			var match = LoadConfig("/etc/apache2/httpd.conf").Value;
+			string apacheConfigFileName = ConfigurationManager.AppSettings["ApacheConfigFileName"].ToString();
+			var match = LoadConfig(apacheConfigFileName).Value;
 			string full_text = GetMatchText(match);
 			Console.WriteLine(full_text);
 		}
