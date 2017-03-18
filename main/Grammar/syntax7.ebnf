@@ -6,10 +6,12 @@ include_path := [ slash | backslash ] , part_of_path , { ( slash | backslash ) ,
 
 other_directive := other_keyword , { string | other_directive_fragment | iws | glue } ;
 other_keyword  := keyword - include_keyword ;
-keyword := ( nonspace - quote , { nonspace - quote} ) - ows ;
+keyword := nonspace , { nonspace } - ows ;
 
-other_directive_fragment := other_directive_fragment_el, {other_directive_fragment_el} ;
-other_directive_fragment_el  := nonspace - (backslash | quote) ;
+other_directive_fragment := other_directive_fragment_el, {other_directive_fragment_el}; 
+other_directive_fragment_el  := nonspace - backslash | backslash , nonspace ;
+(*other_directive_fragment_el  := nonspace - (backslash | quote) | backslash , nonspace ;*)
+
 glue := backslash , newline ;
 
 part_of_path := { nonspace } - ows ;
@@ -22,19 +24,19 @@ ows_element := iws_element | newline ; (* overline white space *)
 iws := iws_element , { iws_element } ; 
 iws_element := space_or_tab | glue | comment ;  (* inside of line white space *)
 
+space_or_tab := ( space | tab ) , { space | tab } ;
+newline := cr | lf | cr , lf ;
+nonspace := ac - ( space | tab | cr | lf ) ;
+
 string := dquote , { string_fragment | escape_sequence } , dquote ; (* string should keep spaces *)
 string_fragment := string_fragment_element , { string_fragment_element } ;
 string_fragment_element := ac  - (dquote | backslash);
-escape_sequence := backslash , ( dquote , backslash , dot );
+escape_sequence := backslash , ( dquote | backslash | dot );
 
 comment := comment_start, comment_body , comment_end ;
 comment_start := { space_or_tab } , "#" ;
 comment_body := { ac - ( lf | cr ) } ;
 comment_end := (* empty rule *) ;
-
-space_or_tab := ( space | tab ) , { space | tab } ;
-newline := cr | lf | cr , lf ;
-nonspace := ac - ( space | tab | cr | lf ) ;
 
 letter := ? Terminals.Letter ? ;
 letter_or_digit := ? Terminals.LetterOrDigit ? ;
