@@ -4,10 +4,13 @@ include_directive := include_keyword , iws , include_path ;
 include_keyword := ("i" | "I") , ("n" | "N") , ("c" | "C") , ("l" | "L") , ("u" | "U") , ("d" | "D") , ("e" | "E") ;
 include_path := [ slash | backslash ] , part_of_path , { ( slash | backslash ) , part_of_path } , [ slash | backslash ] ;
 
-other_directive := other_keyword, { other_directive_fragment } ;
+other_directive := other_keyword, { other_directive_fragment | glue } ;
 
-other_keyword := ( other_directive_fragment - iws, { other_directive_fragment - iws} ) - include_keyword ;
-other_directive_fragment  := ac - ( cr | lf ) ;
+other_keyword := ( other_keyword_symbol , { other_keyword_symbol } ) - include_keyword ;
+other_keyword_symbol := ( other_directive_fragment | backslash ) - ( iws | newline );
+other_directive_fragment  := ac - ( cr | lf | backslash ) 
+  | backslash , ac - ( cr | lf ) ;
+glue := backslash , newline ;
 
 part_of_path := start_of_path , { body_of_path } , end_of_path ;
 start_of_path := body_of_path ;
@@ -18,7 +21,7 @@ ws := [ ows ] ; (* white space *)
 ows := ows_element , { ows_element } ; (* obligatory white space *)
 ows_element := iws_element | newline | other_directive ;
 iws := iws_element , { iws_element } ; 
-iws_element := space_or_tab | backslash , newline | comment ;
+iws_element := space_or_tab | glue | comment ;
 
 space_or_tab := ( space | tab ) , { space | tab } ;
 newline := cr | lf | cr , lf ;

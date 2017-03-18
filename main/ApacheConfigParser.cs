@@ -87,7 +87,14 @@ class DefaultNamespaceName
 		{
 			string apacheConfigFileName = ConfigurationManager.AppSettings["ApacheConfigFileName"].ToString();
 			var match = LoadConfig(apacheConfigFileName).Value;
-			string full_text = GetMatchText(match);
+			//string full_text = GetMatchText(match);
+			var sb = new StringBuilder();
+			var matches = match.Find("other_directive", true);
+			foreach (var m in matches)
+			{
+				sb.AppendLine(GetMatchText(m));
+			}
+			string full_text = sb.ToString();
 			Console.WriteLine(full_text);
 		}
 		catch (Exception ex)
@@ -98,6 +105,10 @@ class DefaultNamespaceName
 
 	public static string GetMatchText(Match node)
 	{
+		if (string.Compare(node.Name, "glue") == 0)
+		{
+			return " ";
+		}
 		if (node.HasMatches)
 		{
 			StringBuilder buffer = new StringBuilder(node.Length);
