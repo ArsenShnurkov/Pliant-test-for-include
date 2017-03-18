@@ -125,10 +125,10 @@ class DefaultNamespaceName
 
 	public static string GetShortText(Match node)
 	{
-		/*if (string.Compare(node.Name, "other_keyword") == 0 && string.Compare(node.Text, "CustomLog") == 0)
+		if (string.Compare(node.Name, "section_start") == 0 && string.Compare(node.Text, "section_end") == 0)
 		{
 			Debugger.Break();
-		}*/
+		}
 		if (string.Compare(node.Name, "glue") == 0
 		   || string.Compare(node.Name, "ows") == 0
 		   || string.Compare(node.Name, "iws") == 0)

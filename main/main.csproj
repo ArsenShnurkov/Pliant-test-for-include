@@ -38,6 +38,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Grammar\" />
+    <Folder Include="_TestTexts\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Grammar\syntax8.ebnf" />
@@ -59,6 +60,7 @@
     <None Include="Grammar\syntax3.ebnf" />
     <None Include="Grammar\syntax2.ebnf" />
     <None Include="Grammar\syntax1.ebnf" />
+    <None Include="_TestTexts\test_text1.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
