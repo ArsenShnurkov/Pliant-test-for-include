@@ -13,7 +13,7 @@ class DefaultNamespaceName
 	const string nameOfTheStartingRule = "file";
 	static public KeyValuePair<string, Match> LoadConfig(string configName)
 	{
-		var fileContent = LoadFromResource(nameof(DefaultNamespaceName), "Grammar", "syntax6.ebnf");
+		var fileContent = LoadFromResource(nameof(DefaultNamespaceName), "Grammar", "syntax7.ebnf");
 
 		EbnfStyle style = (EbnfStyle)(
 			(uint)EbnfStyle.Iso14977
@@ -87,15 +87,18 @@ class DefaultNamespaceName
 		{
 			string apacheConfigFileName = ConfigurationManager.AppSettings["ApacheConfigFileName"].ToString();
 			var match = LoadConfig(apacheConfigFileName).Value;
-			//string full_text = GetMatchText(match);
-			var sb = new StringBuilder();
+
+			string full_text = GetFullText(match);
+			Console.WriteLine(full_text);
+
+			var sb_short = new StringBuilder();
 			var matches = match.Find("other_directive", true);
 			foreach (var m in matches)
 			{
-				sb.AppendLine(GetMatchText(m));
+				sb_short.AppendLine(GetShortText(m));
 			}
-			string full_text = sb.ToString();
-			Console.WriteLine(full_text);
+			string short_text = sb_short.ToString();
+			Console.WriteLine(short_text);
 		}
 		catch (Exception ex)
 		{
@@ -103,8 +106,29 @@ class DefaultNamespaceName
 		}
 	}
 
-	public static string GetMatchText(Match node)
+	public static string GetFullText(Match node)
 	{
+		var sb = new StringBuilder();
+		foreach (var m in node.Matches)
+		{
+			if (string.Compare(m.Name, "include_directive") == 0)
+			{
+				sb.AppendLine(GetFullText(m));
+			}
+			else
+			{
+				sb.AppendLine(m.Text);
+			}
+		}
+		return sb.ToString();
+	}
+
+	public static string GetShortText(Match node)
+	{
+		if (string.Compare(node.Name, "other_keyword") == 0 && string.Compare(node.Text, "CustomLog") == 0)
+		{
+			Debugger.Break();
+		}
 		if (string.Compare(node.Name, "glue") == 0
 		   || string.Compare(node.Name, "ows") == 0
 		   || string.Compare(node.Name, "iws") == 0)
@@ -116,7 +140,7 @@ class DefaultNamespaceName
 			StringBuilder buffer = new StringBuilder(node.Length);
 			foreach (var m in node.Matches)
 			{
-				buffer.Append(GetMatchText(m));
+				buffer.Append(GetShortText(m));
 			}
 			return buffer.ToString();
 		}

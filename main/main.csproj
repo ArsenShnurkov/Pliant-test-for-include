@@ -46,6 +46,7 @@
     <EmbeddedResource Include="Grammar\syntax4.ebnf" />
     <EmbeddedResource Include="Grammar\syntax5.ebnf" />
     <EmbeddedResource Include="Grammar\syntax6.ebnf" />
+    <EmbeddedResource Include="Grammar\syntax7.ebnf" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Eto.Parse.git\Eto.Parse\Eto.Parse.csproj">
