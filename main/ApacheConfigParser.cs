@@ -105,7 +105,9 @@ class DefaultNamespaceName
 
 	public static string GetMatchText(Match node)
 	{
-		if (string.Compare(node.Name, "glue") == 0)
+		if (string.Compare(node.Name, "glue") == 0
+		   || string.Compare(node.Name, "ows") == 0
+		   || string.Compare(node.Name, "iws") == 0)
 		{
 			return " ";
 		}
