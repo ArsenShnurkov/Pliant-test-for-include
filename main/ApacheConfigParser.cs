@@ -13,7 +13,7 @@ class DefaultNamespaceName
 	const string nameOfTheStartingRule = "file";
 	static public KeyValuePair<string, Match> LoadConfig(string configName)
 	{
-		var fileContent = LoadFromResource(nameof(DefaultNamespaceName), "Grammar", "syntax7.ebnf");
+		var fileContent = LoadFromResource(nameof(DefaultNamespaceName), "Grammar", "syntax8.ebnf");
 
 		EbnfStyle style = (EbnfStyle)(
 			(uint)EbnfStyle.Iso14977

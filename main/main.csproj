@@ -40,13 +40,7 @@
     <Folder Include="Grammar\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Grammar\syntax1.ebnf" />
-    <EmbeddedResource Include="Grammar\syntax2.ebnf" />
-    <EmbeddedResource Include="Grammar\syntax3.ebnf" />
-    <EmbeddedResource Include="Grammar\syntax4.ebnf" />
-    <EmbeddedResource Include="Grammar\syntax5.ebnf" />
-    <EmbeddedResource Include="Grammar\syntax6.ebnf" />
-    <EmbeddedResource Include="Grammar\syntax7.ebnf" />
+    <EmbeddedResource Include="Grammar\syntax8.ebnf" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Eto.Parse.git\Eto.Parse\Eto.Parse.csproj">
@@ -58,6 +52,13 @@
     <None Include="Pliant.cs" />
     <None Include="Eto.Parse.cs" />
     <None Include="app.config" />
+    <None Include="Grammar\syntax7.ebnf" />
+    <None Include="Grammar\syntax6.ebnf" />
+    <None Include="Grammar\syntax5.ebnf" />
+    <None Include="Grammar\syntax4.ebnf" />
+    <None Include="Grammar\syntax3.ebnf" />
+    <None Include="Grammar\syntax2.ebnf" />
+    <None Include="Grammar\syntax1.ebnf" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
