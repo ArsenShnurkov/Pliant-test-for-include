@@ -72,6 +72,7 @@ class DefaultNamespaceName
 	{
 		var res = new List<KeyValuePair<string, Match>>();
 		string[] files = Directory.GetFiles(path, mask);
+		Array.Sort(files, StringComparer.InvariantCulture); // see https://superuser.com/questions/705297/in-what-order-does-apache-load-conf-files-and-which-ones
 		for (int i = 0; i < files.Length; ++i)
 		{
 			var filename = files[i];
