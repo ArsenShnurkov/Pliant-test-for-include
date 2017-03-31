@@ -13,6 +13,11 @@ class DefaultNamespaceName
 	const string nameOfTheStartingRule = "file";
 	static public KeyValuePair<string, Match> LoadConfig(string configName)
 	{
+		if (File.Exists(configName) == false)
+		{
+			throw new FileNotFoundException(configName);
+		}
+		Console.WriteLine("Loadind file " + configName);
 		var fileContent = LoadFromResource(nameof(DefaultNamespaceName), "Grammar", "syntax8.ebnf");
 
 		EbnfStyle style = (EbnfStyle)(
@@ -71,7 +76,7 @@ class DefaultNamespaceName
 	public static List<KeyValuePair<string, string>> ExtractPairsFromPreparsedText(string originalContent)
 	{
 		var res = new List<KeyValuePair<string, string>>();
-		var fileContent = LoadFromResource(nameof(DefaultNamespaceName), "Grammar", "syntax9.ebnf");
+		var fileContent = LoadFromResource(nameof(DefaultNamespaceName), "Grammar", "syntax10.ebnf");
 
 		EbnfStyle style = (EbnfStyle)(
 			(uint)EbnfStyle.Iso14977
@@ -129,7 +134,8 @@ class DefaultNamespaceName
 				var match = LoadConfig(apacheConfigFileName).Value;
 
 				string full_text = GetFullText(match);
-				Console.WriteLine(full_text);
+				//Console.WriteLine(full_text);
+				File.WriteAllText("full_text.txt", full_text);
 
 				var sb_short = new StringBuilder();
 				var matches = match.Find("other_directive", true);
