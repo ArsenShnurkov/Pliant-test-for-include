@@ -20,8 +20,7 @@ other_keyword  := keyword - include_keyword ;
 keyword := nonspace - left_angle_bracket , { nonspace } - ows ;
 
 other_directive_fragment := other_directive_fragment_el, {other_directive_fragment_el}; 
-other_directive_fragment_el  := nonspace - backslash | backslash , nonspace ;
-(*other_directive_fragment_el  := nonspace - (backslash | quote) | backslash , nonspace ;*)
+other_directive_fragment_el  := ( nonspace - backslash)  | ( backslash , nonspace ) ;
 
 glue := backslash , newline ;
 

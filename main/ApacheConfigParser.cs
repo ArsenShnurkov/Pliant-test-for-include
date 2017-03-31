@@ -68,6 +68,43 @@ class DefaultNamespaceName
 		return new KeyValuePair<string, Match>(configName, match);
 	}
 
+	public static List<KeyValuePair<string, string>> ExtractPairsFromPreparsedText(string originalContent)
+	{
+		var res = new List<KeyValuePair<string, string>>();
+		var fileContent = LoadFromResource(nameof(DefaultNamespaceName), "Grammar", "syntax9.ebnf");
+
+		EbnfStyle style = (EbnfStyle)(
+			(uint)EbnfStyle.Iso14977
+			//& ~(uint) EbnfStyle.WhitespaceSeparator	
+			| (uint)EbnfStyle.EscapeTerminalStrings);
+
+		EbnfGrammar grammar;
+		Grammar parser;
+		try
+		{
+			grammar = new EbnfGrammar(style);
+			parser = grammar.Build(fileContent, nameOfTheStartingRule);
+		}
+		catch (Exception ex)
+		{
+			Trace.WriteLine(ex.ToString());
+			/*
+			System.ArgumentException: the topParser specified is not found in this ebnf
+			  at Eto.Parse.Grammars.EbnfGrammar.Build (System.String bnf, System.String startParserName) [0x00048] in <filename unknown>:0 
+			  at Globals.Main (System.String[] args) [0x0002b] in /var/calculate/remote/distfiles/egit-src/SqlParser-on-EtoParse.git/test1/Program.cs:20 
+			*/
+			throw;
+		}
+
+		var match = parser.Match(originalContent);
+		if (match.Success == false)
+		{
+			throw new FormatException($"Error when reparsing {match.ErrorMessage}");
+		}
+		var m = match.Matches.Find("virtual_host_section", true);
+		return res;
+	}
+
 	static public IEnumerable<KeyValuePair<string, Match>> LoadConfigsByMask(string mask, string path)
 	{
 		var res = new List<KeyValuePair<string, Match>>();
@@ -81,25 +118,31 @@ class DefaultNamespaceName
 		}
 		return res;
 	}
-
+	const string cachefilename = "cache.txt";
 	static void Main(string[] args)
 	{
 		try
 		{
-			string apacheConfigFileName = ConfigurationManager.AppSettings["ApacheConfigFileName"].ToString();
-			var match = LoadConfig(apacheConfigFileName).Value;
-
-			string full_text = GetFullText(match);
-			Console.WriteLine(full_text);
-
-			var sb_short = new StringBuilder();
-			var matches = match.Find("other_directive", true);
-			foreach (var m in matches)
+			if (File.Exists(cachefilename) == false)
 			{
-				sb_short.AppendLine(GetShortText(m));
+				string apacheConfigFileName = ConfigurationManager.AppSettings["ApacheConfigFileName"].ToString();
+				var match = LoadConfig(apacheConfigFileName).Value;
+
+				string full_text = GetFullText(match);
+				Console.WriteLine(full_text);
+
+				var sb_short = new StringBuilder();
+				var matches = match.Find("other_directive", true);
+				foreach (var m in matches)
+				{
+					sb_short.AppendLine(GetShortText(m));
+				}
+				string shortened_content = sb_short.ToString();
+				File.WriteAllText(cachefilename, shortened_content);
 			}
-			string short_text = sb_short.ToString();
-			Console.WriteLine(short_text);
+			string short_text = File.ReadAllText(cachefilename);
+			var res = ExtractPairsFromPreparsedText(short_text);
+			Console.WriteLine(res.Count);
 		}
 		catch (Exception ex)
 		{

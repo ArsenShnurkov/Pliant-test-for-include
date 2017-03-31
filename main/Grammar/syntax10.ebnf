@@ -1,0 +1,188 @@
+﻿file := ws , [ directive , { ows , directive } , ws ] ;
+
+directive := section | other_simple_directive ;
+section := section_start , {  ws , directive } , ws , section_end ;
+other_simple_directive := servername , { string | other_directive_fragment | iws }
+     | accessfilename , { string | other_directive_fragment | iws }
+     | addcharset , { string | other_directive_fragment | iws }
+     | addhandler , { string | other_directive_fragment | iws }
+     | addicon , { string | other_directive_fragment | iws }
+     | addiconbyencoding , { string | other_directive_fragment | iws }
+     | addiconbytype , { string | other_directive_fragment | iws }
+     | addlanguage , { string | other_directive_fragment | iws }
+     | addoutputfilter , { string | other_directive_fragment | iws }
+     | addtype , { string | other_directive_fragment | iws }
+     | alias , { string | other_directive_fragment | iws }
+     | allowoverride , { string | other_directive_fragment | iws }
+     | contentdigest , { string | other_directive_fragment | iws }
+     | customlog , { string | other_directive_fragment | iws }
+     | defaulticon , { string | other_directive_fragment | iws }
+     | directoryindex , { string | other_directive_fragment | iws }
+     | enablemmap , { string | other_directive_fragment | iws }
+     | enablesendfile , { string | other_directive_fragment | iws }
+     | errordocument , { string | other_directive_fragment | iws }
+     | errorlog , { string | other_directive_fragment | iws }
+     | expiretimeout , { string | other_directive_fragment | iws }
+     | extendedstatus , { string | other_directive_fragment | iws }
+     | fileetag , { string | other_directive_fragment | iws }
+     | forcelanguagepriority , { string | other_directive_fragment | iws }
+     | group , { string | other_directive_fragment | iws }
+     | headername , { string | other_directive_fragment | iws }
+     | hostnamelookups , { string | other_directive_fragment | iws }
+     | indexignore , { string | other_directive_fragment | iws }
+     | indexoptions , { string | other_directive_fragment | iws }
+     | keepalive , { string | other_directive_fragment | iws }
+     | keepalivetimeout , { string | other_directive_fragment | iws }
+     | languagepriority , { string | other_directive_fragment | iws }
+     | loadmodule , { string | other_directive_fragment | iws }
+     | logformat , { string | other_directive_fragment | iws }
+     | loglevel , { string | other_directive_fragment | iws }
+     | maxconnectionsperchild , { string | other_directive_fragment | iws }
+     | maxkeepalive , { string | other_directive_fragment | iws }
+     | maxrequestworkers , { string | other_directive_fragment | iws }
+     | maxspareservers , { string | other_directive_fragment | iws }
+     | maxsparethreads , { string | other_directive_fragment | iws }
+     | mimemagicfile , { string | other_directive_fragment | iws }
+     | minspareservers , { string | other_directive_fragment | iws }
+     | minsparethreads , { string | other_directive_fragment | iws }
+     | multiplexer , { string | other_directive_fragment | iws }
+     | options , { string | other_directive_fragment | iws }
+     | pidfile , { string | other_directive_fragment | iws }
+     | processor , { string | other_directive_fragment | iws }
+     | readmename , { string | other_directive_fragment | iws }
+     | require , { string | other_directive_fragment | iws }
+     | root_directory_keyword , { string | other_directive_fragment | iws }
+     | serveralias , { string | other_directive_fragment | iws }
+     | serverroot , { string | other_directive_fragment | iws }
+     | serversignature , { string | other_directive_fragment | iws }
+     | servertokens , { string | other_directive_fragment | iws }
+     | sethandler , { string | other_directive_fragment | iws }
+     | startservers , { string | other_directive_fragment | iws }
+     | threadsperchild , { string | other_directive_fragment | iws }
+     | timeout , { string | other_directive_fragment | iws }
+     | traceenable , { string | other_directive_fragment | iws }
+     | typesconfig , { string | other_directive_fragment | iws }
+     | usecanonicalname , { string | other_directive_fragment | iws }
+     | user , { string | other_directive_fragment | iws }
+     | userdir , { string | other_directive_fragment | iws }
+     (*| other_keyword , { string | other_directive_fragment | iws }*)
+     ;
+
+keyword := nonspace - left_angle_bracket , { nonspace } - ows ;
+other_keyword  := keyword - known_keywords ;
+known_keywords := root_directory_keyword | server_name | server_alias;
+
+root_directory_keyword:=("R"|"r"),("O"|"o"),("O"|"o"),("T"|"t"),("D"|"d"),("I"|"i"),("R"|"r"),("E"|"e"),("C"|"c"),("T"|"t"),("O"|"o"),("R"|"r"),("Y"|"y");
+servername:=("S"|"s"),("E"|"e"),("R"|"r"),("V"|"v"),("E"|"e"),("R"|"r"),("N"|"n"),("A"|"a"),("M"|"m"),("E"|"e");
+serveralias:=("S"|"s"),("E"|"e"),("R"|"r"),("V"|"v"),("E"|"e"),("R"|"r"),("A"|"a"),("L"|"l"),("I"|"i"),("A"|"a"),("S"|"s");
+serverroot:=("S"|"s"),("E"|"e"),("R"|"r"),("V"|"v"),("E"|"e"),("R"|"r"),("R"|"r"),("O"|"o"),("O"|"o"),("T"|"t");
+loadmodule:=("L"|"l"),("O"|"o"),("A"|"a"),("D"|"d"),("M"|"m"),("O"|"o"),("D"|"d"),("U"|"u"),("L"|"l"),("E"|"e");
+user:=("U"|"u"),("S"|"s"),("E"|"e"),("R"|"r");
+group:=("G"|"g"),("R"|"r"),("O"|"o"),("U"|"u"),("P"|"p");
+timeout:=("T"|"t"),("I"|"i"),("M"|"m"),("E"|"e"),("O"|"o"),("U"|"u"),("T"|"t");
+keepalive:=("K"|"k"),("E"|"e"),("E"|"e"),("P"|"p"),("A"|"a"),("L"|"l"),("I"|"i"),("V"|"v"),("E"|"e");
+keepalivetimeout:=("K"|"k"),("E"|"e"),("E"|"e"),("P"|"p"),("A"|"a"),("L"|"l"),("I"|"i"),("V"|"v"),("E"|"e"),("T"|"t"),("I"|"i"),("M"|"m"),("E"|"e"),("O"|"o"),("U"|"u"),("T"|"t");
+maxkeepalive:=("M"|"m"),("A"|"a"),("X"|"x"),("K"|"k"),("E"|"e"),("E"|"e"),("P"|"p"),("A"|"a"),("L"|"l"),("I"|"i"),("V"|"v"),("E"|"e");
+usecanonicalname:=("U"|"u"),("S"|"s"),("E"|"e"),("C"|"c"),("A"|"a"),("N"|"n"),("O"|"o"),("N"|"n"),("I"|"i"),("C"|"c"),("A"|"a"),("L"|"l"),("N"|"n"),("A"|"a"),("M"|"m"),("E"|"e");
+accessfilename:=("A"|"a"),("C"|"c"),("C"|"c"),("E"|"e"),("S"|"s"),("S"|"s"),("F"|"f"),("I"|"i"),("L"|"l"),("E"|"e"),("N"|"n"),("A"|"a"),("M"|"m"),("E"|"e");
+servertokens:=("S"|"s"),("E"|"e"),("R"|"r"),("V"|"v"),("E"|"e"),("R"|"r"),("T"|"t"),("O"|"o"),("K"|"k"),("E"|"e"),("N"|"n"),("S"|"s");
+traceenable:=("T"|"t"),("R"|"r"),("A"|"a"),("C"|"c"),("E"|"e"),("E"|"e"),("N"|"n"),("A"|"a"),("B"|"b"),("L"|"l"),("E"|"e");
+serversignature:=("S"|"s"),("E"|"e"),("R"|"r"),("V"|"v"),("E"|"e"),("R"|"r"),("S"|"s"),("I"|"i"),("G"|"g"),("N"|"n"),("A"|"a"),("T"|"t"),("U"|"u"),("R"|"r"),("E"|"e");
+hostnamelookups:=("H"|"h"),("O"|"o"),("S"|"s"),("T"|"t"),("N"|"n"),("A"|"a"),("M"|"m"),("E"|"e"),("L"|"l"),("O"|"o"),("O"|"o"),("K"|"k"),("U"|"u"),("P"|"p"),("S"|"s");
+enablemmap:=("E"|"e"),("N"|"n"),("A"|"a"),("B"|"b"),("L"|"l"),("E"|"e"),("M"|"m"),("M"|"m"),("A"|"a"),("P"|"p");
+enablesendfile:=("E"|"e"),("N"|"n"),("A"|"a"),("B"|"b"),("L"|"l"),("E"|"e"),("S"|"s"),("E"|"e"),("N"|"n"),("D"|"d"),("F"|"f"),("I"|"i"),("L"|"l"),("E"|"e");
+fileetag:=("F"|"f"),("I"|"i"),("L"|"l"),("E"|"e"),("E"|"e"),("T"|"t"),("A"|"a"),("G"|"g");
+contentdigest:=("C"|"c"),("O"|"o"),("N"|"n"),("T"|"t"),("E"|"e"),("N"|"n"),("T"|"t"),("D"|"d"),("I"|"i"),("G"|"g"),("E"|"e"),("S"|"s"),("T"|"t");
+errorlog:=("E"|"e"),("R"|"r"),("R"|"r"),("O"|"o"),("R"|"r"),("L"|"l"),("O"|"o"),("G"|"g");
+loglevel:=("L"|"l"),("O"|"o"),("G"|"g"),("L"|"l"),("E"|"e"),("V"|"v"),("E"|"e"),("L"|"l");
+options:=("O"|"o"),("P"|"p"),("T"|"t"),("I"|"i"),("O"|"o"),("N"|"n"),("S"|"s");
+allowoverride:=("A"|"a"),("L"|"l"),("L"|"l"),("O"|"o"),("W"|"w"),("O"|"o"),("V"|"v"),("E"|"e"),("R"|"r"),("R"|"r"),("I"|"i"),("D"|"d"),("E"|"e");
+require:=("R"|"r"),("E"|"e"),("Q"|"q"),("U"|"u"),("I"|"i"),("R"|"r"),("E"|"e");
+directoryindex:=("D"|"d"),("I"|"i"),("R"|"r"),("E"|"e"),("C"|"c"),("T"|"t"),("O"|"o"),("R"|"r"),("Y"|"y"),("I"|"i"),("N"|"n"),("D"|"d"),("E"|"e"),("X"|"x");
+alias:=("A"|"a"),("L"|"l"),("I"|"i"),("A"|"a"),("S"|"s");
+addoutputfilter:=("A"|"a"),("D"|"d"),("D"|"d"),("O"|"o"),("U"|"u"),("T"|"t"),("P"|"p"),("U"|"u"),("T"|"t"),("F"|"f"),("I"|"i"),("L"|"l"),("T"|"t"),("E"|"e"),("R"|"r");
+addhandler:=("A"|"a"),("D"|"d"),("D"|"d"),("H"|"h"),("A"|"a"),("N"|"n"),("D"|"d"),("L"|"l"),("E"|"e"),("R"|"r");
+languagepriority:=("L"|"l"),("A"|"a"),("N"|"n"),("G"|"g"),("U"|"u"),("A"|"a"),("G"|"g"),("E"|"e"),("P"|"p"),("R"|"r"),("I"|"i"),("O"|"o"),("R"|"r"),("I"|"i"),("T"|"t"),("Y"|"y");
+forcelanguagepriority:=("F"|"f"),("O"|"o"),("R"|"r"),("C"|"c"),("E"|"e"),("L"|"l"),("A"|"a"),("N"|"n"),("G"|"g"),("U"|"u"),("A"|"a"),("G"|"g"),("E"|"e"),("P"|"p"),("R"|"r"),("I"|"i"),("O"|"o"),("R"|"r"),("I"|"i"),("T"|"t"),("Y"|"y");
+errordocument:=("E"|"e"),("R"|"r"),("R"|"r"),("O"|"o"),("R"|"r"),("D"|"d"),("O"|"o"),("C"|"c"),("U"|"u"),("M"|"m"),("E"|"e"),("N"|"n"),("T"|"t");
+addlanguage:=("A"|"a"),("D"|"d"),("D"|"d"),("L"|"l"),("A"|"a"),("N"|"n"),("G"|"g"),("U"|"u"),("A"|"a"),("G"|"g"),("E"|"e");
+addiconbyencoding:=("A"|"a"),("D"|"d"),("D"|"d"),("I"|"i"),("C"|"c"),("O"|"o"),("N"|"n"),("B"|"b"),("Y"|"y"),("E"|"e"),("N"|"n"),("C"|"c"),("O"|"o"),("D"|"d"),("I"|"i"),("N"|"n"),("G"|"g");
+addcharset:=("A"|"a"),("D"|"d"),("D"|"d"),("C"|"c"),("H"|"h"),("A"|"a"),("R"|"r"),("S"|"s"),("E"|"e"),("T"|"t");
+addicon:=("A"|"a"),("D"|"d"),("D"|"d"),("I"|"i"),("C"|"c"),("O"|"o"),("N"|"n");
+addiconbytype:=("A"|"a"),("D"|"d"),("D"|"d"),("I"|"i"),("C"|"c"),("O"|"o"),("N"|"n"),("B"|"b"),("Y"|"y"),("T"|"t"),("Y"|"y"),("P"|"p"),("E"|"e");
+indexoptions:=("I"|"i"),("N"|"n"),("D"|"d"),("E"|"e"),("X"|"x"),("O"|"o"),("P"|"p"),("T"|"t"),("I"|"i"),("O"|"o"),("N"|"n"),("S"|"s");
+addiconbyencoding:=("A"|"a"),("D"|"d"),("D"|"d"),("I"|"i"),("C"|"c"),("O"|"o"),("N"|"n"),("B"|"b"),("Y"|"y"),("E"|"e"),("N"|"n"),("C"|"c"),("O"|"o"),("D"|"d"),("I"|"i"),("N"|"n"),("G"|"g");
+defaulticon:=("D"|"d"),("E"|"e"),("F"|"f"),("A"|"a"),("U"|"u"),("L"|"l"),("T"|"t"),("I"|"i"),("C"|"c"),("O"|"o"),("N"|"n");
+readmename:=("R"|"r"),("E"|"e"),("A"|"a"),("D"|"d"),("M"|"m"),("E"|"e"),("N"|"n"),("A"|"a"),("M"|"m"),("E"|"e");
+indexignore:=("I"|"i"),("N"|"n"),("D"|"d"),("E"|"e"),("X"|"x"),("I"|"i"),("G"|"g"),("N"|"n"),("O"|"o"),("R"|"r"),("E"|"e");
+headername:=("H"|"h"),("E"|"e"),("A"|"a"),("D"|"d"),("E"|"e"),("R"|"r"),("N"|"n"),("A"|"a"),("M"|"m"),("E"|"e");
+sethandler:=("S"|"s"),("E"|"e"),("T"|"t"),("H"|"h"),("A"|"a"),("N"|"n"),("D"|"d"),("L"|"l"),("E"|"e"),("R"|"r");
+logformat:=("L"|"l"),("O"|"o"),("G"|"g"),("F"|"f"),("O"|"o"),("R"|"r"),("M"|"m"),("A"|"a"),("T"|"t");
+typesconfig:=("T"|"t"),("Y"|"y"),("P"|"p"),("E"|"e"),("S"|"s"),("C"|"c"),("O"|"o"),("N"|"n"),("F"|"f"),("I"|"i"),("G"|"g");
+customlog:=("C"|"c"),("U"|"u"),("S"|"s"),("T"|"t"),("O"|"o"),("M"|"m"),("L"|"l"),("O"|"o"),("G"|"g");
+addtype:=("A"|"a"),("D"|"d"),("D"|"d"),("T"|"t"),("Y"|"y"),("P"|"p"),("E"|"e");
+mimemagicfile:=("M"|"m"),("I"|"i"),("M"|"m"),("E"|"e"),("M"|"m"),("A"|"a"),("G"|"g"),("I"|"i"),("C"|"c"),("F"|"f"),("I"|"i"),("L"|"l"),("E"|"e");
+extendedstatus:=("E"|"e"),("X"|"x"),("T"|"t"),("E"|"e"),("N"|"n"),("D"|"d"),("E"|"e"),("D"|"d"),("S"|"s"),("T"|"t"),("A"|"a"),("T"|"t"),("U"|"u"),("S"|"s");
+userdir:=("U"|"u"),("S"|"s"),("E"|"e"),("R"|"r"),("D"|"d"),("I"|"i"),("R"|"r");
+allowoverride:=("A"|"a"),("L"|"l"),("L"|"l"),("O"|"o"),("W"|"w"),("O"|"o"),("V"|"v"),("E"|"e"),("R"|"r"),("R"|"r"),("I"|"i"),("D"|"d"),("E"|"e");
+pidfile:=("P"|"p"),("I"|"i"),("D"|"d"),("F"|"f"),("I"|"i"),("L"|"l"),("E"|"e");
+startservers:=("S"|"s"),("T"|"t"),("A"|"a"),("R"|"r"),("T"|"t"),("S"|"s"),("E"|"e"),("R"|"r"),("V"|"v"),("E"|"e"),("R"|"r"),("S"|"s");
+minspareservers:=("M"|"m"),("I"|"i"),("N"|"n"),("S"|"s"),("P"|"p"),("A"|"a"),("R"|"r"),("E"|"e"),("S"|"s"),("E"|"e"),("R"|"r"),("V"|"v"),("E"|"e"),("R"|"r"),("S"|"s");
+maxspareservers:=("M"|"m"),("A"|"a"),("X"|"x"),("S"|"s"),("P"|"p"),("A"|"a"),("R"|"r"),("E"|"e"),("S"|"s"),("E"|"e"),("R"|"r"),("V"|"v"),("E"|"e"),("R"|"r"),("S"|"s");
+maxrequestworkers:=("M"|"m"),("A"|"a"),("X"|"x"),("R"|"r"),("E"|"e"),("Q"|"q"),("U"|"u"),("E"|"e"),("S"|"s"),("T"|"t"),("W"|"w"),("O"|"o"),("R"|"r"),("K"|"k"),("E"|"e"),("R"|"r"),("S"|"s");
+maxconnectionsperchild:=("M"|"m"),("A"|"a"),("X"|"x"),("C"|"c"),("O"|"o"),("N"|"n"),("N"|"n"),("E"|"e"),("C"|"c"),("T"|"t"),("I"|"i"),("O"|"o"),("N"|"n"),("S"|"s"),("P"|"p"),("E"|"e"),("R"|"r"),("C"|"c"),("H"|"h"),("I"|"i"),("L"|"l"),("D"|"d");
+minsparethreads:=("M"|"m"),("I"|"i"),("N"|"n"),("S"|"s"),("P"|"p"),("A"|"a"),("R"|"r"),("E"|"e"),("T"|"t"),("H"|"h"),("R"|"r"),("E"|"e"),("A"|"a"),("D"|"d"),("S"|"s");
+maxsparethreads:=("M"|"m"),("A"|"a"),("X"|"x"),("S"|"s"),("P"|"p"),("A"|"a"),("R"|"r"),("E"|"e"),("T"|"t"),("H"|"h"),("R"|"r"),("E"|"e"),("A"|"a"),("D"|"d"),("S"|"s");
+threadsperchild:=("T"|"t"),("H"|"h"),("R"|"r"),("E"|"e"),("A"|"a"),("D"|"d"),("S"|"s"),("P"|"p"),("E"|"e"),("R"|"r"),("C"|"c"),("H"|"h"),("I"|"i"),("L"|"l"),("D"|"d");
+maxrequestworkers:=("M"|"m"),("A"|"a"),("X"|"x"),("R"|"r"),("E"|"e"),("Q"|"q"),("U"|"u"),("E"|"e"),("S"|"s"),("T"|"t"),("W"|"w"),("O"|"o"),("R"|"r"),("K"|"k"),("E"|"e"),("R"|"r"),("S"|"s");
+multiplexer:=("M"|"m"),("U"|"u"),("L"|"l"),("T"|"t"),("I"|"i"),("P"|"p"),("L"|"l"),("E"|"e"),("X"|"x"),("E"|"e"),("R"|"r");
+expiretimeout:=("E"|"e"),("X"|"x"),("P"|"p"),("I"|"i"),("R"|"r"),("E"|"e"),("T"|"t"),("I"|"i"),("M"|"m"),("E"|"e"),("O"|"o"),("U"|"u"),("T"|"t");
+processor:=("P"|"p"),("R"|"r"),("O"|"o"),("C"|"c"),("E"|"e"),("S"|"s"),("S"|"s"),("O"|"o"),("R"|"r");
+
+
+section_start := left_angle_bracket ,  [iws] , section_type ,  [ iws , { string | section_fragment | iws } ] , right_angle_bracket ;
+section_end := left_angle_bracket , [iws] ,  "/" , [iws] , section_type , [iws] , right_angle_bracket ;
+section_type := virtual_host_section | other_section_type;
+virtual_host_section := ("V"|"v"),("I"|"i"),("R"|"r"),("T"|"t"),("U"|"u"),("A"|"a"),("L"|"l"),("H"|"o"),("O"|"o"),("S"|"s"),("T"|"t");
+other_section_type := section_type_element, { section_type_element }  ;
+section_type_element := nonspace - right_angle_bracket ;
+section_fragment := section_fragment_el, { section_fragment_el } ;
+section_fragment_el := nonspace - ( backslash | right_angle_bracket) | backslash , nonspace ;
+
+
+other_directive_fragment := other_directive_fragment_el, {other_directive_fragment_el}; 
+other_directive_fragment_el  := nonspace ;
+
+part_of_path := { nonspace } - ows ;
+
+ws := [ ows ] ; (* white space *)
+ows := ows_element , { ows_element } ;
+ows_element := iws_element | newline ; (* overline white space *)
+iws := iws_element , { iws_element } ; 
+iws_element := space_or_tab ;  (* inside of line white space *)
+
+space_or_tab := ( space | tab ) , { space | tab } ;
+newline := cr | lf | ( cr , lf ) ;
+nonspace := ac - ( space | tab | cr | lf ) ;
+
+string := dquote , { string_fragment | escape_sequence } , dquote ; (* string should keep spaces *)
+string_fragment := string_fragment_element , { string_fragment_element } ;
+string_fragment_element := ac  - (dquote | backslash);
+escape_sequence := backslash , ( dquote | backslash | dot );
+
+letter := ? Terminals.Letter ? ;
+letter_or_digit := ? Terminals.LetterOrDigit ? ;
+ac := ? Terminals.AnyChar ? ;
+
+left_angle_bracket := "<";
+right_angle_bracket := ">";
+tab := "\x09" ;
+lf := "\x0A" ;
+cr := "\x0D" ;
+space := "\x20" ;
+dquote := "\x22";
+(* apostrophe := "\x27"; *)
+asterisk := "\x2A" ;
+dot := "\x2E" ;
+slash := "\x2F" ;
+backslash := "\x5C" ;
