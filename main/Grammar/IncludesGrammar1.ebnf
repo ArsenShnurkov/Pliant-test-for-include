@@ -1,0 +1,66 @@
+﻿file := ws , [ include_directive , { ews , include_directive } , ws ] ;
+
+include_directive := include_keyword , iws , include_path ;
+include_keyword := ("i" | "I") , ("n" | "N") , ("c" | "C") , ("l" | "L") , ("u" | "U") , ("d" | "D") , ("e" | "E") ;
+include_path := [ slash | backslash ] , part_of_path , { ( slash | backslash ) , part_of_path } , [ slash | backslash ] ;
+
+other_directive := section_start | section_end | other_simple_directive ;
+other_simple_directive := other_keyword , { string | other_directive_fragment | iws | glue } ;
+
+(* https://httpd.apache.org/docs/2.4/sections.html *)
+
+section_start := left_angle_bracket ,  [iws] , section_type ,  [ iws , { string | section_fragment | iws | glue } ] , right_angle_bracket ;
+section_end := left_angle_bracket , [iws] ,  "/" , [iws] , section_type , [iws] , right_angle_bracket ;
+section_type := section_type_element, { section_type_element }  ;
+section_type_element := nonspace - right_angle_bracket ;
+section_fragment := section_fragment_el, { section_fragment_el } ;
+section_fragment_el := nonspace - ( backslash | right_angle_bracket) | backslash , nonspace ;
+
+other_keyword  := keyword - include_keyword ;
+keyword := nonspace - left_angle_bracket , { nonspace } - ows ;
+
+other_directive_fragment := other_directive_fragment_el, {other_directive_fragment_el}; 
+other_directive_fragment_el  := ( nonspace - backslash)  | ( backslash , nonspace ) ;
+
+glue := backslash , newline ;
+
+part_of_path := { nonspace } - ows ;
+
+ws := [ ews ] ; (* white space *)
+ews := ews_element, { ews_element } ;
+ews_element := ows_element | other_directive ;  (* extended whitespace *)
+ows := ows_element , { ows_element } ;
+ows_element := iws_element | newline ; (* overline white space *)
+iws := iws_element , { iws_element } ; 
+iws_element := space_or_tab | glue | comment ;  (* inside of line white space *)
+
+space_or_tab := ( space | tab ) , { space | tab } ;
+newline := cr | lf | cr , lf ;
+nonspace := ac - ( space | tab | cr | lf ) ;
+
+string := dquote , { string_fragment | escape_sequence } , dquote ; (* string should keep spaces *)
+string_fragment := string_fragment_element , { string_fragment_element } ;
+string_fragment_element := ac  - (dquote | backslash);
+escape_sequence := backslash , ( dquote | backslash | dot );
+
+comment := comment_start, comment_body , comment_end ;
+comment_start := { space_or_tab } , "#" ;
+comment_body := { ac - ( lf | cr ) } ;
+comment_end := (* empty rule *) ;
+
+letter := ? Terminals.Letter ? ;
+letter_or_digit := ? Terminals.LetterOrDigit ? ;
+ac := ? Terminals.AnyChar ? ;
+
+left_angle_bracket := "<";
+right_angle_bracket := ">";
+tab := "\x09" ;
+lf := "\x0A" ;
+cr := "\x0D" ;
+space := "\x20" ;
+dquote := "\x22";
+(* apostrophe := "\x27"; *)
+asterisk := "\x2A" ;
+dot := "\x2E" ;
+slash := "\x2F" ;
+backslash := "\x5C" ;

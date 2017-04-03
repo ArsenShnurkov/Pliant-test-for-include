@@ -5,22 +5,22 @@ using Eto.Parse.Grammars;
 
 partial class Globals
 {
-	const string DefaultNamespaceName = "DefaultNamespaceName";
-	const string nameOfTheStartingRule = "file";
+	//const string DefaultNamespaceName = "DefaultNamespaceName";
+	const string nameOfTheStartingRuleA = "file";
 
-	static Grammar grammarForIncludes = null;
-	public static Grammar IncludesGrammar
+	static Grammar grammarForApplications = null;
+	public static Grammar ApplicationsGrammar
 	{
 		get
 		{
-			return GetIncludesGrammar();
+			return GetGrammarForApplications();
 		}
 	}
-	static Grammar GetIncludesGrammar()
+	static Grammar GetGrammarForApplications()
 	{
 		if (grammarForIncludes == null)
 		{
-			var fileContent = LoadFromResource(DefaultNamespaceName, "Grammar", "IncludesGrammar1.ebnf");
+			var fileContent = LoadFromResource(DefaultNamespaceName, "Grammar", "FullGrammar1.ebnf");
 			EbnfStyle style = (EbnfStyle)(
 				(uint)EbnfStyle.Iso14977
 				//& ~(uint) EbnfStyle.WhitespaceSeparator	
@@ -30,7 +30,7 @@ partial class Globals
 			try
 			{
 				grammar = new EbnfGrammar(style);
-				grammarForIncludes = grammar.Build(fileContent, nameOfTheStartingRule);
+				grammarForApplications = grammar.Build(fileContent, nameOfTheStartingRuleA);
 			}
 			catch (Exception ex)
 			{
@@ -43,6 +43,6 @@ partial class Globals
 				throw;
 			}
 		}
-		return grammarForIncludes;
+		return grammarForApplications;
 	}
 }
