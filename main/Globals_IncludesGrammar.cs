@@ -6,9 +6,10 @@ using Eto.Parse.Grammars;
 
 partial class Globals
 {
-	const string DefaultNamespaceName = "DefaultNamespaceName";
-	const string nameOfTheStartingRule = "file";
-
+	/// <summary>
+	/// This value is used to calculate relative paths from config in the same way as Apache does
+	/// </summary>
+	/// <value>The server root.</value>
 	public static string ServerRoot
 	{
 		get
@@ -43,7 +44,7 @@ partial class Globals
 			try
 			{
 				grammar = new EbnfGrammar(style);
-				grammarForIncludes = grammar.Build(fileContent, nameOfTheStartingRule);
+				grammarForIncludes = grammar.Build(fileContent, "file");
 			}
 			catch (Exception ex)
 			{

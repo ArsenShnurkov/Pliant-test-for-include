@@ -11,6 +11,7 @@ using System.Drawing;
 
 partial class Globals
 {
+
 	const string cachefilename = "cache.txt";
 	static void Main(string[] args)
 	{
@@ -89,7 +90,7 @@ partial class Globals
 		}
 		Trace.WriteLine($"ServerRoot={path}");
 
-		RemoveExtraNodes(match);
+		new TreeCleaner().RemoveExtraNodes(match);
 
 		// Здесь надо проанализировать распарсенное, извлечь маски и повызывать LoadConfigsByMask
 		var list = match.Find("include_directive", true);
@@ -118,42 +119,20 @@ partial class Globals
 		return new KeyValuePair<string, Match>(configName, match);
 	}
 
-	static void RemoveExtraNodes(GrammarMatch match)
-	{
-		var indexesToRemove = new Stack<int>();
-		var positions = new HashSet<int>();
-		for (int i = 0; i < match.Matches.Count; ++i)
-		{
-			var node = match.Matches[i];
-			if (positions.Contains(node.Index))
-			{
-				indexesToRemove.Push(i);
-			}
-			else
-			{
-				positions.Add(node.Index);
-			}
-		}
-		while (indexesToRemove.Count > 0)
-		{
-			int i = indexesToRemove.Pop();
-			match.Matches.RemoveAt(i);
-		}
-	}
-
 	public static List<KeyValuePair<string, string>> ExtractPairsFromPreparsedText(string originalContent)
 	{
 		var res = new List<KeyValuePair<string, string>>();
-		var match = ApplicationsGrammar.Match(originalContent);
+		var match = MonoGrammar.Match(originalContent);
 		if (match.Success == false)
 		{
 			throw new FormatException($"Error when reparsing {match.ErrorMessage}");
 		}
-		RemoveExtraNodes(match);
+		new TreeCleaner().RemoveExtraNodes(match);
 		var m = match.Matches.Find("virtual_host_section", true);
 		foreach (var virthost in m)
 		{
-			virthost.Find("servername", true);
+			var servername = virthost.Find("servername", true);
+			var documentroot = virthost.Find("documentroot", true);
 		}
 		return res;
 	}
@@ -185,27 +164,5 @@ partial class Globals
 			res.Add(pair);
 		}
 		return res;
-	}
-
-	public static string LoadFromResource(string default_namespace, string folder, string name_of_file)
-	{
-		// Resource ID: mptgitmodules.Resources.syntax4.ebnf
-		var fullname = string.Format("{0}.{1}.{2}", default_namespace, folder, name_of_file);
-		using (var s = Assembly.GetExecutingAssembly().GetManifestResourceStream(fullname))
-		{
-			return LoadFromStream(s);
-		}
-	}
-	public static string LoadFromStream(Stream s)
-	{
-		using (var sr = new StreamReader(s))
-		{
-			return LoadFromTextReader(sr);
-		}
-	}
-	public static string LoadFromTextReader(TextReader sr)
-	{
-		var fileContent = sr.ReadToEnd();
-		return fileContent;
 	}
 }
