@@ -12,12 +12,14 @@ public class Context
 	public void WriteFileName(string filename)
 	{
 		fs.WriteLine("Loadind file " + filename);
+		fs.Flush();
 	}
 	public void WriteInclusion(string textOfDirective, string sourceFile, int line, int position)
 	{
 		FileInfo fi = new FileInfo(sourceFile);
 		fs.WriteLine("Include directive encountered at " + fi.Name + $" ({line},{position})");
 		fs.WriteLine("Text: " + textOfDirective);
+		fs.Flush();
 	}
 }
 

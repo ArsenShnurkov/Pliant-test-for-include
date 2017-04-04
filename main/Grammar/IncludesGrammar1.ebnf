@@ -1,7 +1,10 @@
-﻿file := ws , [ include_directive , { ews , include_directive } , ws ] ;
+﻿file := ws , [ preprocessor_directive , { ews , preprocessor_directive } , ws ] ;
 
+preprocessor_directive := include_directive | serverroot_directive;
 include_directive := include_keyword , iws , include_path ;
+serverroot_directive := serverroot , iws , include_path ;
 include_keyword := ("i" | "I") , ("n" | "N") , ("c" | "C") , ("l" | "L") , ("u" | "U") , ("d" | "D") , ("e" | "E") ;
+serverroot:=("S"|"s"),("E"|"e"),("R"|"r"),("V"|"v"),("E"|"e"),("R"|"r"),("R"|"r"),("O"|"o"),("O"|"o"),("T"|"t");
 include_path := [ slash | backslash ] , part_of_path , { ( slash | backslash ) , part_of_path } , [ slash | backslash ] ;
 
 other_directive := section_start | section_end | other_simple_directive ;
@@ -16,7 +19,7 @@ section_type_element := nonspace - right_angle_bracket ;
 section_fragment := section_fragment_el, { section_fragment_el } ;
 section_fragment_el := nonspace - ( backslash | right_angle_bracket) | backslash , nonspace ;
 
-other_keyword  := keyword - include_keyword ;
+other_keyword  := keyword - ( include_keyword | serverroot ) ;
 keyword := nonspace - left_angle_bracket , { nonspace } - ows ;
 
 other_directive_fragment := other_directive_fragment_el, {other_directive_fragment_el}; 

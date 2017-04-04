@@ -16,10 +16,13 @@ partial class Globals
 	{
 		try
 		{
-			//if (File.Exists(cachefilename) == false)
+			if (File.Exists(cachefilename) == false)
 			{
-				string apacheConfigFileName = ConfigurationManager.AppSettings["ApacheConfigFileName"].ToString();
+				string apacheConfigFileName = Path.Combine(ConfigurationManager.AppSettings["ApacheConfigFilePath"].ToString(),"httpd.conf");;
 				var match = LoadConfig(apacheConfigFileName).Value;
+
+				string html_text = GetHtml(match, "test1");
+				File.WriteAllText("parse_markup.htm", html_text);
 
 				string full_text = GetFullText(match);
 				//Console.WriteLine(full_text);
@@ -53,10 +56,6 @@ partial class Globals
 		{
 			throw new FileNotFoundException(configName);
 		}
-		/*
-		 * Выводим название файла. Хорошо бы, наверное, выводить не в stdout на консоль, а в специальный файл?
-		 * Контексты для кого придумали в C# ?
-		*/
 		Context.WriteFileName(configName);
 		var originalContent = File.ReadAllText(configName, Encoding.UTF8);
 
@@ -65,19 +64,46 @@ partial class Globals
 		{
 			throw new FormatException($"invalid format of file {configName}");
 		}
-		var fi = new FileInfo(configName);
-		string path = fi.Directory.FullName;
-		// Здесь надо проанализировать аспарсенное, извлечь маски и повызывать LoadConfigsByMask
-		var list = match.Find("include_directive");
+
+		// Getting ServerRoot directive
+		string path = null;
+		var ServerRootMatches = match.Find("serverroot_directive", true);
+		foreach (var ServerRootDirective in ServerRootMatches)
+		{
+			if (path == null)
+			{
+				path = ServerRootDirective["include_path"].Matches[0].Text;
+				if (path.StartsWith("\"", StringComparison.InvariantCulture) && path.EndsWith("\"", StringComparison.InvariantCulture))
+				{
+					path = path.Substring(1, path.Length - 2);
+				}
+			}
+			else
+			{
+				throw new FormatException("several ServerRoot entries encountered");
+			}
+		}
+		if (path != null)
+		{
+			ServerRoot = path;
+		}
+		Trace.WriteLine($"ServerRoot={path}");
+
+		RemoveExtraNodes(match);
+
+		// Здесь надо проанализировать распарсенное, извлечь маски и повызывать LoadConfigsByMask
+		var list = match.Find("include_directive", true);
 		foreach (var include_directive in list)
 		{
-			int index = match.Matches.FindIndex(m => m == include_directive);
+			int index = match.Matches.FindIndex(m => m.Index == include_directive.Index);
 
 			Point pt = GetLineNumberAndPosition(originalContent, include_directive.Index);
 			Context.WriteInclusion(include_directive.Text, configName, pt.X, pt.Y);
 			string mask = include_directive["include_path"].Text;
 			// читаем файлы
-			var content = LoadConfigsByMask(mask, path);
+			var content = LoadConfigsByMask(mask, ServerRoot);
+
+			// match.Matches[index].Tag = content; // Простановка тега почему-то не срабатывает.
 			// заменяем директиву на контент файлов
 			match.Matches.RemoveAt(index);
 			foreach (var p in content) // вставляем несколько узлов
@@ -92,6 +118,29 @@ partial class Globals
 		return new KeyValuePair<string, Match>(configName, match);
 	}
 
+	static void RemoveExtraNodes(GrammarMatch match)
+	{
+		var indexesToRemove = new Stack<int>();
+		var positions = new HashSet<int>();
+		for (int i = 0; i < match.Matches.Count; ++i)
+		{
+			var node = match.Matches[i];
+			if (positions.Contains(node.Index))
+			{
+				indexesToRemove.Push(i);
+			}
+			else
+			{
+				positions.Add(node.Index);
+			}
+		}
+		while (indexesToRemove.Count > 0)
+		{
+			int i = indexesToRemove.Pop();
+			match.Matches.RemoveAt(i);
+		}
+	}
+
 	public static List<KeyValuePair<string, string>> ExtractPairsFromPreparsedText(string originalContent)
 	{
 		var res = new List<KeyValuePair<string, string>>();
@@ -100,13 +149,29 @@ partial class Globals
 		{
 			throw new FormatException($"Error when reparsing {match.ErrorMessage}");
 		}
+		RemoveExtraNodes(match);
 		var m = match.Matches.Find("virtual_host_section", true);
+		foreach (var virthost in m)
+		{
+			virthost.Find("servername", true);
+		}
 		return res;
 	}
 
 	static public IEnumerable<KeyValuePair<string, Match>> LoadConfigsByMask(string mask, string path)
 	{
 		var res = new List<KeyValuePair<string, Match>>();
+		string separator = new string(Path.DirectorySeparatorChar, 1);
+		if (mask.StartsWith(separator, StringComparison.InvariantCulture) == false)
+		{
+			mask = Path.Combine(path, mask);
+		}
+		path = Path.GetDirectoryName(mask);
+		mask = mask.Substring(path.Length);
+		if (mask.StartsWith(separator, StringComparison.InvariantCulture))
+		{
+			mask = mask.Substring(separator.Length);
+		}
 		string[] files = Directory.GetFiles(path, mask); // can throw exception if mask contains wrong path
 		if (files.Length == 0 && mask.Contains("*") == false)
 		{
@@ -120,50 +185,6 @@ partial class Globals
 			res.Add(pair);
 		}
 		return res;
-	}
-
-	public static string GetFullText(Match node)
-	{
-		var sb = new StringBuilder();
-		foreach (var m in node.Matches)
-		{
-			if (string.Compare(m.Name, "include_directive") == 0)
-			{
-				sb.AppendLine(GetFullText(m));
-			}
-			else
-			{
-				sb.AppendLine(m.Text);
-			}
-		}
-		return sb.ToString();
-	}
-
-	public static string GetShortText(Match node)
-	{
-		if (string.Compare(node.Name, "section_start") == 0 && string.Compare(node.Text, "section_end") == 0)
-		{
-			Debugger.Break();
-		}
-		if (string.Compare(node.Name, "glue") == 0
-		   || string.Compare(node.Name, "ows") == 0
-		   || string.Compare(node.Name, "iws") == 0)
-		{
-			return " ";
-		}
-		if (node.HasMatches)
-		{
-			StringBuilder buffer = new StringBuilder(node.Length);
-			foreach (var m in node.Matches)
-			{
-				buffer.Append(GetShortText(m));
-			}
-			return buffer.ToString();
-		}
-		else
-		{
-			return node.Text;
-		}
 	}
 
 	public static string LoadFromResource(string default_namespace, string folder, string name_of_file)

@@ -18,7 +18,7 @@ partial class Globals
 	}
 	static Grammar GetGrammarForApplications()
 	{
-		if (grammarForIncludes == null)
+		if (grammarForApplications == null)
 		{
 			var fileContent = LoadFromResource(DefaultNamespaceName, "Grammar", "FullGrammar1.ebnf");
 			EbnfStyle style = (EbnfStyle)(

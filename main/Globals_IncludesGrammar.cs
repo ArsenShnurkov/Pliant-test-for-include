@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using System.Diagnostics;
 using Eto.Parse;
 using Eto.Parse.Grammars;
@@ -7,6 +8,18 @@ partial class Globals
 {
 	const string DefaultNamespaceName = "DefaultNamespaceName";
 	const string nameOfTheStartingRule = "file";
+
+	public static string ServerRoot
+	{
+		get
+		{
+			return ConfigurationManager.AppSettings["ApacheConfigFilePath"].ToString();
+		}
+		set
+		{
+			/* ignore value */
+		}
+	}
 
 	static Grammar grammarForIncludes = null;
 	public static Grammar IncludesGrammar
