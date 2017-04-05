@@ -44,6 +44,7 @@
     <Compile Include="TreeDump.cs" />
     <Compile Include="TreeCleaner.cs" />
     <Compile Include="Properties\Globals_Resources.cs" />
+    <Compile Include="Globals_AvotTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Grammar\" />
@@ -53,6 +54,7 @@
     <EmbeddedResource Include="Grammar\IncludesGrammar1.ebnf" />
     <EmbeddedResource Include="Grammar\FullGrammar1.ebnf" />
     <EmbeddedResource Include="Grammar\MonoGrammar1.ebnf" />
+    <EmbeddedResource Include="Grammar\SimplifiedAvotTest.ebnf" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Eto.Parse.git\Eto.Parse\Eto.Parse.csproj">

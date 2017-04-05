@@ -1,0 +1,9 @@
+﻿a_file := v_file | o_file ;
+o_file := file - v_file ;
+v_file := { a_directive } ;
+file := { directive } ;
+
+a_directive := v_directive | o_directive ;
+o_directive := directive - v_directive ;
+v_directive := "00" ;
+directive := "00" | "11" ;

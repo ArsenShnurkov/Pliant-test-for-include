@@ -17,6 +17,15 @@ partial class Globals
 	{
 		try
 		{
+			/*
+			var atm = AvotTestGrammar.Match("000111000");
+			if (atm.Success == false)
+			{
+				throw new FormatException($"Error when reparsing {atm.ErrorMessage}");
+			}
+			var v_atm = atm.Find("v_directive", true);
+			*/
+
 			if (File.Exists(cachefilename) == false)
 			{
 				string apacheConfigFileName = Path.Combine(ConfigurationManager.AppSettings["ApacheConfigFilePath"].ToString(),"httpd.conf");;
