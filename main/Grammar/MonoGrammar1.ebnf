@@ -161,8 +161,7 @@ rest_of_line := rest_of_line_char, { rest_of_line_char } ;
 rest_of_line_char := ac - (cr | lf);
 
 (* see "section_type" rule *)
-virtualhost:=("V"|"v"),("I"|"i"),("R"|"r"),("T"|"t"),("U"|"u"),("A"|"a"),("L"|"l"),("H"|"h"),("O"|"o"),("S"|"s"),("T"|"t");
-ifdefine:=("I"|"i"),("F"|"f"),("D"|"d"),("E"|"e"),("F"|"f"),("I"|"i"),("N"|"n"),("E"|"e");
+addmonoapplicationsifdefine:=("I"|"i"),("F"|"f"),("D"|"d"),("E"|"e"),("F"|"f"),("I"|"i"),("N"|"n"),("E"|"e");
 directory:=("D"|"d"),("I"|"i"),("R"|"r"),("E"|"e"),("C"|"c"),("T"|"t"),("O"|"o"),("R"|"r"),("Y"|"y");
 ifmodule:=("I"|"i"),("F"|"f"),("M"|"m"),("O"|"o"),("D"|"d"),("U"|"u"),("L"|"l"),("E"|"e");
 location:=("L"|"l"),("O"|"o"),("C"|"c"),("A"|"a"),("T"|"t"),("I"|"i"),("O"|"o"),("N"|"n");

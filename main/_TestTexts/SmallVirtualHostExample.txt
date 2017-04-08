@@ -1,0 +1,4 @@
+<VirtualHost *:443>
+ServerName configuration.ru
+AddMonoApplications default "/:/var/www/configuration.ru/htdocs"
+</VirtualHost>

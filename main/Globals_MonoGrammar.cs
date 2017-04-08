@@ -5,19 +5,19 @@ using Eto.Parse.Grammars;
 
 partial class Globals
 {
-	static Grammar grammarAvotTest = null;
-	public static Grammar AvotTestGrammar
+static Grammar grammarForApplications = null;
+	public static Grammar MonoGrammar
 	{
 		get
 		{
-			return GetAvotTestGrammar();
+			return GetMonoGrammar();
 		}
 	}
-	static Grammar GetAvotTestGrammar()
+	static Grammar GetMonoGrammar()
 	{
-		if (grammarAvotTest == null)
+		if (grammarForApplications == null)
 		{
-			var fileContent = LoadFromResource(DefaultNamespaceName, "Grammar", "SimplifiedAvotTest.ebnf");
+			var fileContent = LoadFromResource(DefaultNamespaceName, "Grammar", "MonoGrammar3.ebnf");
 			EbnfStyle style = (EbnfStyle)(
 				(uint)EbnfStyle.Iso14977
 				//& ~(uint) EbnfStyle.WhitespaceSeparator	
@@ -27,7 +27,7 @@ partial class Globals
 			try
 			{
 				grammar = new EbnfGrammar(style);
-				grammarAvotTest = grammar.Build(fileContent, "a_file");
+				grammarForApplications = grammar.Build(fileContent, "file");
 			}
 			catch (Exception ex)
 			{
@@ -40,6 +40,6 @@ partial class Globals
 				throw;
 			}
 		}
-		return grammarAvotTest;
+		return grammarForApplications;
 	}
 }

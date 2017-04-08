@@ -55,6 +55,8 @@
     <EmbeddedResource Include="Grammar\FullGrammar1.ebnf" />
     <EmbeddedResource Include="Grammar\MonoGrammar1.ebnf" />
     <EmbeddedResource Include="Grammar\SimplifiedAvotTest.ebnf" />
+    <EmbeddedResource Include="Grammar\MonoGrammar2.ebnf" />
+    <EmbeddedResource Include="Grammar\MonoGrammar3.ebnf" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Eto.Parse.git\Eto.Parse\Eto.Parse.csproj">
@@ -75,6 +77,7 @@
     <None Include="Grammar\syntax9.ebnf" />
     <None Include="Grammar\syntax10.ebnf" />
     <None Include="Grammar\syntax8.ebnf" />
+    <None Include="_TestTexts\SmallVirtualHostExample.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -131,17 +131,22 @@ partial class Globals
 	public static List<KeyValuePair<string, string>> ExtractPairsFromPreparsedText(string originalContent)
 	{
 		var res = new List<KeyValuePair<string, string>>();
+		var watch = System.Diagnostics.Stopwatch.StartNew();
 		var match = MonoGrammar.Match(originalContent);
+		// the code that you want to measure comes here
+		watch.Stop();
+		var elapsedMs = watch.ElapsedMilliseconds;
+		Console.WriteLine($"parse time is {elapsedMs}");
 		if (match.Success == false)
 		{
 			throw new FormatException($"Error when reparsing {match.ErrorMessage}");
 		}
 		new TreeCleaner().RemoveExtraNodes(match);
-		var m = match.Matches.Find("virtual_host_section", true);
+		var m = match.Matches.Find("a_section", true);
 		foreach (var virthost in m)
 		{
-			var servername = virthost.Find("servername", true);
-			var documentroot = virthost.Find("documentroot", true);
+			var servername = virthost.Find("v_instruction_servername", true);
+			var addmonoapplications = virthost.Find("v_instruction_addmonoapplications", true);
 		}
 		return res;
 	}

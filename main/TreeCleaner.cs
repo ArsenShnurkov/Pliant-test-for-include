@@ -3,21 +3,22 @@ using Eto.Parse;
 
 public class TreeCleaner
 {
-	Stack<int> indexesToRemove = new Stack<int>();
-	HashSet<int> positions = new HashSet<int>();
+	HashSet<KeyValuePair<int, int>> positions = new HashSet<KeyValuePair<int, int>>();
 
 	public void RemoveExtraNodes(Match match)
 	{
+		Stack<int> indexesToRemove = new Stack<int>();
 		for (int i = 0; i < match.Matches.Count; ++i)
 		{
 			var node = match.Matches[i];
-			if (positions.Contains(node.Index))
+			bool bDuplicate = positions.Contains(new KeyValuePair<int,int>(node.Index, node.Length));
+			if (bDuplicate)
 			{
 				indexesToRemove.Push(i);
 			}
 			else
 			{
-				positions.Add(node.Index);
+				positions.Add(new KeyValuePair<int, int>(match.Index, match.Length));
 			}
 			RemoveExtraNodes(node);
 		}

@@ -1,0 +1,87 @@
+﻿a_file := v_file | o_file ;
+o_file := file - v_file ;
+v_file := ws , [ a_directive , { ows , a_directive } , ws ] ;
+file := ws , [ directive , { ows , directive } , ws ] ;
+
+a_directive := v_directive | o_directive ;
+o_directive := directive - v_directive ;
+v_directive := a_section | a_instruction ;
+directive := section | instruction ;
+
+a_section := v_section | o_section ;
+o_section := section - v_section ;
+v_section := a_section_start , {  ws , a_directive } , ws , a_section_end ;
+section := section_start , {  ws , directive } , ws , section_end ;
+
+a_section_start := v_section_start | o_section_start ;
+o_section_start := section_start - v_section_start ;
+v_section_start := left_angle_bracket ,  [iws] , a_section_header , [iws], right_angle_bracket ;
+section_start := left_angle_bracket ,  [iws] , section_header , [iws], right_angle_bracket ;
+
+a_section_end := v_section_end | o_section_end ;
+o_section_end := section_end - v_section_end;
+v_section_end := left_angle_bracket , [iws] ,  "/" , [iws] , a_section_type , [iws] , right_angle_bracket ;
+section_end := left_angle_bracket , [iws] ,  "/" , [iws] , section_type , [iws] , right_angle_bracket ;
+
+a_section_header := v_section_header | o_section_header;
+o_section_header := section_header - v_section_header;
+v_section_header := a_section_type, [ iws , {  ac - right_angle_bracket } ] ;
+section_header := section_type, [ iws , {  ac - right_angle_bracket } ] ;
+
+a_instruction := v_instruction | o_instruction ;
+o_instruction := instruction - v_instruction ;
+v_instruction := v_instruction_servername | v_instruction_addmonoapplications ;
+instruction := keyword , iws, rest_of_line ;
+
+v_instruction_servername := servername, iws, rest_of_line ;
+v_instruction_addmonoapplications := addmonoapplications, iws, rest_of_line ;
+rest_of_line := rest_of_line_char, { rest_of_line_char } ;
+rest_of_line_char := ac - (cr | lf);
+
+a_section_type := v_section_type | o_section_type ;
+o_section_type := section_type - v_section_type;
+v_section_type := virtualhost ;
+section_type := section_type_char, {section_type_char} ;
+section_type_char := ac - ( space | tab | cr | lf | right_angle_bracket) ;
+
+a_keyword := v_keyword | o_keyword ;
+o_keyword := keyword - v_keyword ;
+v_keyword := servername | addmonoapplications ;
+keyword := keyword_char, {keyword_char};
+keyword_char := ac - ( space | tab | cr | lf ) ;
+
+virtualhost:=("V"|"v"),("I"|"i"),("R"|"r"),("T"|"t"),("U"|"u"),("A"|"a"),("L"|"l"),("H"|"h"),("O"|"o"),("S"|"s"),("T"|"t");
+servername:=("S"|"s"),("E"|"e"),("R"|"r"),("V"|"v"),("E"|"e"),("R"|"r"),("N"|"n"),("A"|"a"),("M"|"m"),("E"|"e");
+addmonoapplications:=("A"|"a"),("D"|"d"),("D"|"d"),("M"|"m"),("O"|"o"),("N"|"n"),("O"|"o"),("A"|"a"),("P"|"p"),("P"|"p"),("L"|"l"),("I"|"i"),("C"|"c"),("A"|"a"),("T"|"t"),("I"|"i"),("O"|"o"),("N"|"n"),("S"|"s");
+
+ws := [ ows ] ; (* white space *)
+ows := ows_element , { ows_element } ;
+ows_element := iws_element | newline ; (* overline white space *)
+iws := iws_element , { iws_element } ; 
+iws_element := space_or_tab ;  (* inside of line white space *)
+
+space_or_tab := ( space | tab ) , { space | tab } ;
+newline := cr | lf | ( cr , lf ) ;
+nonspace := ac - ( space | tab | cr | lf ) ;
+
+string := dquote , { string_fragment | escape_sequence } , dquote ; (* string should keep spaces *)
+string_fragment := string_fragment_element , { string_fragment_element } ;
+string_fragment_element := ac  - (dquote | backslash);
+escape_sequence := backslash , ( dquote | backslash | dot );
+
+letter := ? Terminals.Letter ? ;
+letter_or_digit := ? Terminals.LetterOrDigit ? ;
+ac := ? Terminals.AnyChar ? ;
+
+left_angle_bracket := "<";
+right_angle_bracket := ">";
+tab := "\x09" ;
+lf := "\x0A" ;
+cr := "\x0D" ;
+space := "\x20" ;
+dquote := "\x22";
+(* apostrophe := "\x27"; *)
+asterisk := "\x2A" ;
+dot := "\x2E" ;
+slash := "\x2F" ;
+backslash := "\x5C" ;
