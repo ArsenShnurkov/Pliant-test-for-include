@@ -1,0 +1,69 @@
+
+// ==========================================================================
+//  GPPG error listing for yacc source file <my_parser.y - 4/24/2017 1:04:40 PM>
+// ==========================================================================
+//  Version:  1.5.2
+//  Machine:  sabayon
+//  DateTime: 4/24/2017 1:04:46 PM
+//  UserName: user
+// ==========================================================================
+
+
+%using Scanner      //include the Namespace of the scanner-class
+%output=Parser.cs   //names the output-file
+%namespace Parser  //names the namespace of the Parser-class
+
+%parsertype Parser      //names the Parserclass to "Parser"
+%scanbasetype ScanBase  //names the ScanBaseclass to "ScanBase"
+%tokentype Tokens       //names the Tokensenumeration to "Tokens"
+
+%token kwAND "AND", kwOR "OR" //the received Tokens from GPLEX
+%token ID
+
+%YYSTYPE ValueType
+%union { 
+	public int iVal;
+	public string sVal;
+		public static implicit operator ValueType(string s)
+//----------------------------------------^^-------^^
+// Error: This character is invalid in this context
+// Error: This character is invalid in this context
+// ------------------------------------------------
+		{
+// Error: Syntax error, unexpected '{', expecting ';', or '[', or '.', or '<', or ident
+// ------------------------------------------------------------------------------------
+			var res = new ValueType();
+//--------^^-------------^^^
+// Error: This character is invalid in this context
+// Error: This character is invalid in this context
+// Error: This character is invalid in this context
+// ------------------------------------------------
+			res.sVal = s;
+//---------^^
+// Error: This character is invalid in this context
+// ------------------------------------------------
+			return res;
+		}
+}
+// Error: Syntax error, unexpected '}'
+// -----------------------------------
+
+%% //Grammar Rules Section
+
+program  : /* nothing */
+         | Statements
+         ;
+
+Statements : EXPR "AND" EXPR
+           | EXPR "OR" EXPR
+           ;
+
+EXPR : ID
+     ;
+
+%% // User-code Section
+
+// Don't forget to declare the Parser-Constructor
+public Parser(Scanner.Scanner scnr) : base(scnr) { }
+// ==========================================================================
+

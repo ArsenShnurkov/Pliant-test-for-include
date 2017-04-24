@@ -9,6 +9,52 @@ using Eto.Parse;
 using Eto.Parse.Grammars;
 using System.Drawing;
 
+/*class Publication
+{
+	public string company;
+	public int year;
+}
+
+interface IPublicable
+{
+	string Author { get; }
+}
+
+struct Book : IPublicable
+{
+	public Publication FirstPublication;
+	public List<Publication> AllPublications;
+	string author;
+
+	string IPublicable.Author
+	{
+		get
+		{
+			return author;
+		}
+	}
+}
+
+class BookCover
+{
+	Book Content;
+}
+
+struct BookInfo
+{
+	string Title;
+}
+
+static class SimpleBookExtensions
+{
+	public static void Print(this BookInfo info)
+	{
+	}
+	public static void Print(ref this BookInfo info)
+	{
+	}
+}*/
+
 partial class Globals
 {
 
