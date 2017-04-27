@@ -4,11 +4,11 @@
 
 // GPPG version 1.5.2
 // Machine:  sabayon
-// DateTime: 4/24/2017 1:06:13 PM
+// DateTime: 4/27/2017 5:51:25 PM
 // UserName: user
-// Input file <my_parser.y - 4/24/2017 1:06:06 PM>
+// Input file <Grammar1/my_parser.y - 4/27/2017 5:27:42 PM>
 
-// options: lines gplex
+// options: lines report gplex
 
 using System;
 using System.Collections.Generic;
@@ -23,7 +23,7 @@ namespace Parser
 public enum Tokens {error=2,EOF=3,kwAND=4,kwOR=5,ID=6};
 
 public struct ValueType
-#line 12 "my_parser.y"
+#line 12 "Grammar1/my_parser.y"
        { 
 		public int iVal;
 		public string sVal;
@@ -111,7 +111,7 @@ public class Parser: ShiftReduceParser<ValueType, LexLocation>
         return CharToString((char)terminal);
   }
 
-#line 32 "my_parser.y"
+#line 32 "Grammar1/my_parser.y"
 // Don't forget to declare the Parser-Constructor
 public Parser(Scanner.Scanner scnr) : base(scnr) { }
 #line default

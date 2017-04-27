@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<Target Name="Gppg" BeforeTargets="BeforeCompile"
+		Inputs="@(Gppg)"
+                Outputs="%(Gppg.Output)"
+		>
+		<Message Text="Gppg in $(MSBuildExtensionsPath)\gppg-gplex.targets" Importance="High" />
+		<Exec 
+			Command="gppg /out:%(Gppg.Output) /report /gplex @(Gppg)"
+			/>
+	</Target>
+	<Target Name="Gplex" BeforeTargets="BeforeCompile"
+		Inputs="@(Gplex)" 
+                Outputs="%(Gplex.Output)"
+         	>
+		<Message Text="Gplex in $(MSBuildExtensionsPath)\gppg-gplex.targets" Importance="High" />
+		<Exec 
+			Command="gplex /out:%(Gplex.Output) @(Gplex)"
+			/>
+	</Target>
+</Project>

@@ -1,6 +1,6 @@
-%using Scanner      //include the Namespace of the scanner-class
-%output=Parser.cs   //names the output-file
-%namespace Parser  //names the namespace of the Parser-class
+%using Scanner      // include the Namespace of the scanner-class
+%output=Parser.cs   // names the output-file
+%namespace Parser   // names the namespace of the Parser-class
 
 %parsertype Parser      //names the Parserclass to "Parser"
 %scanbasetype ScanBase  //names the ScanBaseclass to "ScanBase"

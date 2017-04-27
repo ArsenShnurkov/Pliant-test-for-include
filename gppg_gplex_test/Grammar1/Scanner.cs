@@ -6,9 +6,9 @@
 //
 //  GPLEX Version:  1.2.2
 //  Machine:  sabayon
-//  DateTime: 4/24/2017 1:06:13 PM
+//  DateTime: 4/27/2017 5:51:25 PM
 //  UserName: user
-//  GPLEX input file <my_lexer.lex - 4/24/2017 1:05:52 PM>
+//  GPLEX input file <Grammar1/my_lexer.lex - 4/27/2017 5:36:15 PM>
 //  GPLEX frame file <embedded resource>
 //
 //  Option settings: parser, minimize
@@ -131,6 +131,7 @@ namespace Scanner
         const int INITIAL = 0;
 
 #region user code
+/* out:Scanner.cs */
 /*see the documentation of GPLEX for further Options you can use */
 #endregion user code
 

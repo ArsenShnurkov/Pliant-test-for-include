@@ -1,0 +1,131 @@
+<html><head><title>Grammar1/my_parser.y</title></head>
+<body bgcolor="white">
+<hr><pre>
+<b>Grammar Grammar1/my_parser.y - 4/27/2017 5:27:42 PM</b>
+
+<a name="prod1">    1</a> $accept: program EOF
+             ;
+
+<a name="prod2">    2</a> program: /* empty */
+<a name="prod3">    3</a>        | Statements
+             ;
+
+<a name="prod4">    4</a> Statements: EXPR "AND" EXPR
+<a name="prod5">    5</a>           | EXPR "OR" EXPR
+                ;
+
+<a name="prod6">    6</a> EXPR: ID
+          ;
+<b><a name="state0">State</a> <a href="#state0">0</a></b>
+
+  <b>Kernel Items</b>
+    1 $accept: . program EOF
+  <b>Parser Actions</b>
+    ID             shift, and go to state <a href="#state7">7</a>
+    EOF            reduce using <a href="#prod2">rule 2</a> (Erasing program)
+
+  <b>Transitions</b>
+    program        go to state <a href="#state1">1</a>
+    Statements     go to state <a href="#state3">3</a>
+    EXPR           go to state <a href="#state4">4</a>
+
+
+<b><a name="state1">State</a> <a href="#state1">1</a></b>
+
+  <b>Kernel Items</b>
+    1 $accept: program . EOF
+  <b>Parser Actions</b>
+    EOF            shift, and go to state <a href="#state2">2</a>
+
+
+
+<b><a name="state2">State</a> <a href="#state2">2</a></b>
+
+  <b>Kernel Items</b>
+    1 $accept: program EOF .
+	-lookahead: {  }
+  <b>Parser Actions</b>
+    error          reduce using <a href="#prod1">rule 1</a> ($accept)
+    EOF            reduce using <a href="#prod1">rule 1</a> ($accept)
+    "AND"          reduce using <a href="#prod1">rule 1</a> ($accept)
+    "OR"           reduce using <a href="#prod1">rule 1</a> ($accept)
+    ID             reduce using <a href="#prod1">rule 1</a> ($accept)
+
+
+
+<b><a name="state3">State</a> <a href="#state3">3</a></b>
+
+  <b>Kernel Items</b>
+    3 program: Statements .
+	-lookahead: { EOF }
+  <b>Parser Actions</b>
+    EOF            reduce using <a href="#prod3">rule 3</a> (program)
+
+
+
+<b><a name="state4">State</a> <a href="#state4">4</a></b>
+
+  <b>Kernel Items</b>
+    4 Statements: EXPR . "AND" EXPR
+    5 Statements: EXPR . "OR" EXPR
+  <b>Parser Actions</b>
+    "AND"          shift, and go to state <a href="#state5">5</a>
+    "OR"           shift, and go to state <a href="#state8">8</a>
+
+
+
+<b><a name="state5">State</a> <a href="#state5">5</a></b>
+
+  <b>Kernel Items</b>
+    4 Statements: EXPR "AND" . EXPR
+  <b>Parser Actions</b>
+    ID             shift, and go to state <a href="#state7">7</a>
+
+  <b>Transitions</b>
+    EXPR           go to state <a href="#state6">6</a>
+
+
+<b><a name="state6">State</a> <a href="#state6">6</a></b>
+
+  <b>Kernel Items</b>
+    4 Statements: EXPR "AND" EXPR .
+	-lookahead: { EOF }
+  <b>Parser Actions</b>
+    EOF            reduce using <a href="#prod4">rule 4</a> (Statements)
+
+
+
+<b><a name="state7">State</a> <a href="#state7">7</a></b>
+
+  <b>Kernel Items</b>
+    6 EXPR: ID .
+	-lookahead: { "AND", "OR", EOF }
+  <b>Parser Actions</b>
+    "AND"          reduce using <a href="#prod6">rule 6</a> (EXPR)
+    "OR"           reduce using <a href="#prod6">rule 6</a> (EXPR)
+    EOF            reduce using <a href="#prod6">rule 6</a> (EXPR)
+
+
+
+<b><a name="state8">State</a> <a href="#state8">8</a></b>
+
+  <b>Kernel Items</b>
+    5 Statements: EXPR "OR" . EXPR
+  <b>Parser Actions</b>
+    ID             shift, and go to state <a href="#state7">7</a>
+
+  <b>Transitions</b>
+    EXPR           go to state <a href="#state9">9</a>
+
+
+<b><a name="state9">State</a> <a href="#state9">9</a></b>
+
+  <b>Kernel Items</b>
+    5 Statements: EXPR "OR" EXPR .
+	-lookahead: { EOF }
+  <b>Parser Actions</b>
+    EOF            reduce using <a href="#prod5">rule 5</a> (Statements)
+
+
+
+</pre></hr></body></html>

@@ -1,11 +1,12 @@
-%using Parser;           //include the namespace of the generated Parser-class
-%namespace Scanner       //names the Namespace of the generated Scanner-class
-%visibility public       //visibility of the types "Tokens","ScanBase","Scanner"
-%scannertype Scanner     //names the Scannerclass to "Scanner"
-%scanbasetype ScanBase   //names the Scanbaseclass to "ScanBase"
-%tokentype Tokens        //names the Tokenenumeration to "Tokens"
+%using Parser;           // include the namespace of the generated Parser-class
+%namespace Scanner       // names the Namespace of the generated Scanner-class
+%visibility public       // visibility of the types "Tokens","ScanBase","Scanner"
+%scannertype Scanner     // names the Scannerclass to "Scanner"
+%scanbasetype ScanBase   // names the Scanbaseclass to "ScanBase"
+%tokentype Tokens        // names the Tokenenumeration to "Tokens"
 
-%option codePage:65001 out:Scanner.cs
+%option codePage:65001
+/* out:Scanner.cs */
 /*see the documentation of GPLEX for further Options you can use */
 
 %{ //user-specified code will be copied in the Output-file
