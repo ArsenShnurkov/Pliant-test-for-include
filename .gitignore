@@ -290,3 +290,7 @@ Thumbs.db
 
 #dotCover
 *.dotCover
+gppg_gplex_test/Grammar1/Parser.cs
+gppg_gplex_test/Grammar1/Scanner.cs
+gppg_gplex_test/Grammar1/my_parser.report.html
+gppg_gplex_test/my_parser.lst

@@ -30,7 +30,7 @@ namespace NCParser
 			scanner.SetSource(file);
 			var parser = new Parser.Parser(scanner);*/
 
-			string simple_test = "a   aa aaa\n\n\n\nbbb bbb bbb bbb";
+			string simple_test = "a\naaa\n\naa\nssss";
 			var ms = new MemoryStream(Encoding.UTF8.GetBytes(simple_test));
 			var scanner = new Scanner.Scanner();
 			scanner.SetSource(ms);

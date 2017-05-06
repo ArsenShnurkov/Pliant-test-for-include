@@ -20,31 +20,37 @@
 
 file
     : /* nothing */
-	| line_parts
-	| eol_parts
+	| eols_started_content
+	| line_started_content
     ;
 
-line_parts
-	: line 
-	| line eol_parts
+eols_started_content
+	: eols
+	| eols line_started_content
 	;
-
-eol_parts
-    : eols 
-	| eols line_parts
-    ;
-
-line
-	: parts { $$ = $1; @$ = @1; Console.Write("<${0}${1}..${2}${3}>", @1.StartLine, @1.StartColumn, @1.EndLine, @1.EndColumn); }
-    ;
 
 eols
 	: eol
 	| eol eols
 	; 
 
+line_started_content
+	: last_line_in_the_file
+	| line_with_eol
+	| line_with_eol line_started_content
+	| line_with_eol eols_started_content
+	;
+
+last_line_in_the_file
+	: parts { Console.Write("(E:{0},{1}+{2})", @1.StartLine, @1.StartColumn , @1.EndColumn - @1.StartColumn + 1); }
+    ;
+
+line_with_eol
+	: parts eol { Console.Write("(I:{0},{1}+{2})", @1.StartLine, @1.StartColumn , @2.StartColumn + $2.sVal.Length - @1.StartColumn); }
+	;
+
 eol 
-	: EOL { $$ = $1; @$ = @1; Console.WriteLine(".\n"); }
+	: EOL { Console.Write("\\n"); }
 	;
 
 parts
@@ -58,7 +64,7 @@ space_parts
 	;
 
 space
-    : SPACE { $$ = $1; @$ = @1; Console.Write("_"); }
+    : SPACE { Console.Write($$.sVal); }
     ;
 
 word_parts
@@ -67,7 +73,7 @@ word_parts
 	;
 
 word
-	: WORD { $$ = $1; @$ = @1; Console.Write($<sVal>1); }
+	: WORD { Console.Write($<sVal>1); }
 	;
 
 %% // User-code Section
