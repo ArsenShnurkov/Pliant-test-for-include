@@ -6,9 +6,9 @@
 //
 //  GPLEX Version:  1.2.2
 //  Machine:  sabayon
-//  DateTime: 4/27/2017 5:51:25 PM
+//  DateTime: 5/6/2017 4:59:54 PM
 //  UserName: user
-//  GPLEX input file <Grammar1/my_lexer.lex - 4/27/2017 5:36:15 PM>
+//  GPLEX input file <Grammar1/my_lexer.lex - 5/6/2017 4:54:19 PM>
 //  GPLEX frame file <embedded resource>
 //
 //  Option settings: parser, minimize
@@ -31,6 +31,7 @@ using System.Collections.Generic;
 using System.Runtime.Serialization;
 using System.Diagnostics.CodeAnalysis;
 
+using QUT.Gppg;
 using Parser;
 
 namespace Scanner
@@ -124,8 +125,8 @@ namespace Scanner
         
         enum Result {accept, noMatch, contextFound};
 
-        const int maxAccept = 6;
-        const int initial = 7;
+        const int maxAccept = 4;
+        const int initial = 5;
         const int eofNum = 0;
         const int goStart = -1;
         const int INITIAL = 0;
@@ -164,51 +165,21 @@ namespace Scanner
         }
     };
 
-    static int[] startState = new int[] {7, 0};
+    static int[] startState = new int[] {5, 0};
 
-    static Table[] NxS = new Table[8] {
+    static Table[] NxS = new Table[6] {
 /* NxS[   0] */ new Table(0, 0, 0, null),
-/* NxS[   1] */ new Table(48, 75, -1, new sbyte[] {2, 2, 2, 2, 2, 2, 
-          2, 2, 2, 2, -1, -1, -1, -1, -1, -1, -1, 2, 2, 2, 2, 2, 
-          2, 2, 2, 2, 2, 2, 2, 2, 5, 2, 2, 2, 2, 2, 2, 2, 
-          2, 2, 2, 2, 2, -1, -1, -1, -1, 2, -1, 2, 2, 2, 2, 2, 
-          2, 2, 2, 2, 2, 2, 2, 2, 5, 2, 2, 2, 2, 2, 2, 2, 
-          2, 2, 2, 2, 2}),
-/* NxS[   2] */ new Table(48, 75, -1, new sbyte[] {2, 2, 2, 2, 2, 2, 
-          2, 2, 2, 2, -1, -1, -1, -1, -1, -1, -1, 2, 2, 2, 2, 2, 
-          2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 
-          2, 2, 2, 2, 2, -1, -1, -1, -1, 2, -1, 2, 2, 2, 2, 2, 
-          2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 
-          2, 2, 2, 2, 2}),
-/* NxS[   3] */ new Table(48, 75, -1, new sbyte[] {2, 2, 2, 2, 2, 2, 
-          2, 2, 2, 2, -1, -1, -1, -1, -1, -1, -1, 2, 2, 2, 2, 2, 
-          2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 4, 2, 2, 2, 
-          2, 2, 2, 2, 2, -1, -1, -1, -1, 2, -1, 2, 2, 2, 2, 2, 
-          2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 4, 2, 2, 2, 
-          2, 2, 2, 2, 2}),
-/* NxS[   4] */ new Table(48, 75, -1, new sbyte[] {2, 2, 2, 2, 2, 2, 
-          2, 2, 2, 2, -1, -1, -1, -1, -1, -1, -1, 2, 2, 2, 2, 2, 
-          2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 
-          2, 2, 2, 2, 2, -1, -1, -1, -1, 2, -1, 2, 2, 2, 2, 2, 
-          2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 
-          2, 2, 2, 2, 2}),
-/* NxS[   5] */ new Table(48, 75, -1, new sbyte[] {2, 2, 2, 2, 2, 2, 
-          2, 2, 2, 2, -1, -1, -1, -1, -1, -1, -1, 2, 2, 2, 6, 2, 
-          2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 
-          2, 2, 2, 2, 2, -1, -1, -1, -1, 2, -1, 2, 2, 2, 6, 2, 
-          2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 
-          2, 2, 2, 2, 2}),
-/* NxS[   6] */ new Table(48, 75, -1, new sbyte[] {2, 2, 2, 2, 2, 2, 
-          2, 2, 2, 2, -1, -1, -1, -1, -1, -1, -1, 2, 2, 2, 2, 2, 
-          2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 
-          2, 2, 2, 2, 2, -1, -1, -1, -1, 2, -1, 2, 2, 2, 2, 2, 
-          2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 
-          2, 2, 2, 2, 2}),
-/* NxS[   7] */ new Table(65, 58, -1, new sbyte[] {1, 2, 2, 2, 2, 2, 
-          2, 2, 2, 2, 2, 2, 2, 2, 3, 2, 2, 2, 2, 2, 2, 2, 
-          2, 2, 2, 2, -1, -1, -1, -1, -1, -1, 1, 2, 2, 2, 2, 2, 
-          2, 2, 2, 2, 2, 2, 2, 2, 3, 2, 2, 2, 2, 2, 2, 2, 
-          2, 2, 2, 2}),
+/* NxS[   1] */ new Table(9, 24, 1, new sbyte[] {-1, -1, 1, 1, -1, 1, 
+          1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
+          1, -1}),
+/* NxS[   2] */ new Table(9, 24, -1, new sbyte[] {2, -1, -1, -1, -1, -1, 
+          -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 
+          -1, 2}),
+/* NxS[   3] */ new Table(0, 0, -1, null),
+/* NxS[   4] */ new Table(10, 1, -1, new sbyte[] {3}),
+/* NxS[   5] */ new Table(9, 24, 1, new sbyte[] {2, 3, 1, 1, 4, 1, 
+          1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
+          1, 2}),
     };
 
 int NextState() {
@@ -582,6 +553,7 @@ int NextState() {
         // ============== The main tokenizer code =================
 
         int Scan() {
+            try {
                 for (; ; ) {
                     int next;              // next state to enter
 #if LEFTANCHORS
@@ -637,16 +609,14 @@ int NextState() {
                 return (int)Tokens.EOF;
             break;
         case 1:
+yylval.sVal = yytext; return (int)Tokens.WORD;
+            break;
         case 2:
+yylval.sVal = yytext; return (int)Tokens.SPACE;
+            break;
         case 3:
-        case 5:
-yylval.sVal = yytext; return (int)Tokens.ID;
-            break;
         case 4:
-return (int)Tokens.kwAND;
-            break;
-        case 6:
-return (int)Tokens.kwAND;
+yylval.sVal = yytext; return (int)Tokens.EOL;
             break;
         default:
             break;
@@ -655,6 +625,12 @@ return (int)Tokens.kwAND;
 #endregion
                     }
                 }
+            } // end try
+            finally {
+// User-specified epilog to scan()
+yylloc = new LexLocation(tokLin,tokCol,tokELin,tokECol);
+// End, user-specified epilog
+            } // end finally
         }
 
 #if BACKUP

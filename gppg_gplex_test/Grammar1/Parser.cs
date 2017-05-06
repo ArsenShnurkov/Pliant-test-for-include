@@ -4,9 +4,9 @@
 
 // GPPG version 1.5.2
 // Machine:  sabayon
-// DateTime: 4/27/2017 5:51:25 PM
+// DateTime: 5/6/2017 4:59:54 PM
 // UserName: user
-// Input file <Grammar1/my_parser.y - 4/27/2017 5:27:42 PM>
+// Input file <Grammar1/my_parser.y - 5/6/2017 4:59:31 PM>
 
 // options: lines report gplex
 
@@ -20,10 +20,10 @@ using Scanner;
 
 namespace Parser
 {
-public enum Tokens {error=2,EOF=3,kwAND=4,kwOR=5,ID=6};
+public enum Tokens {error=2,EOF=3,SPACE=4,EOL=5,WORD=6};
 
 public struct ValueType
-#line 12 "Grammar1/my_parser.y"
+#line 14 "Grammar1/my_parser.y"
        { 
 		public int iVal;
 		public string sVal;
@@ -54,35 +54,57 @@ public class Parser: ShiftReduceParser<ValueType, LexLocation>
 #pragma warning disable 649
   private static Dictionary<int, string> aliases;
 #pragma warning restore 649
-  private static Rule[] rules = new Rule[7];
-  private static State[] states = new State[10];
+  private static Rule[] rules = new Rule[21];
+  private static State[] states = new State[21];
   private static string[] nonTerms = new string[] {
-      "program", "$accept", "Statements", "EXPR", };
+      "file", "$accept", "line_parts", "eol_parts", "line", "eols", "parts", 
+      "eol", "space_parts", "word_parts", "space", "word", };
 
   static Parser() {
-    states[0] = new State(new int[]{6,7,3,-2},new int[]{-1,1,-3,3,-4,4});
+    states[0] = new State(new int[]{4,14,6,15,5,19,3,-2},new int[]{-1,1,-3,3,-5,4,-7,8,-9,9,-11,10,-10,16,-12,12,-4,20,-6,6,-8,17});
     states[1] = new State(new int[]{3,2});
     states[2] = new State(-1);
     states[3] = new State(-3);
-    states[4] = new State(new int[]{4,5,5,8});
-    states[5] = new State(new int[]{6,7},new int[]{-4,6});
-    states[6] = new State(-4);
-    states[7] = new State(-6);
-    states[8] = new State(new int[]{6,7},new int[]{-4,9});
-    states[9] = new State(-5);
+    states[4] = new State(new int[]{5,19,3,-5},new int[]{-4,5,-6,6,-8,17});
+    states[5] = new State(-6);
+    states[6] = new State(new int[]{4,14,6,15,3,-7},new int[]{-3,7,-5,4,-7,8,-9,9,-11,10,-10,16,-12,12});
+    states[7] = new State(-8);
+    states[8] = new State(-9);
+    states[9] = new State(-13);
+    states[10] = new State(new int[]{6,15,5,-15,3,-15},new int[]{-10,11,-12,12});
+    states[11] = new State(-16);
+    states[12] = new State(new int[]{4,14,5,-18,3,-18},new int[]{-9,13,-11,10});
+    states[13] = new State(-19);
+    states[14] = new State(-17);
+    states[15] = new State(-20);
+    states[16] = new State(-14);
+    states[17] = new State(new int[]{5,19,4,-10,6,-10,3,-10},new int[]{-6,18,-8,17});
+    states[18] = new State(-11);
+    states[19] = new State(-12);
+    states[20] = new State(-4);
 
     for (int sNo = 0; sNo < states.Length; sNo++) states[sNo].number = sNo;
 
     rules[1] = new Rule(-2, new int[]{-1,3});
     rules[2] = new Rule(-1, new int[]{});
     rules[3] = new Rule(-1, new int[]{-3});
-    rules[4] = new Rule(-3, new int[]{-4,4,-4});
-    rules[5] = new Rule(-3, new int[]{-4,5,-4});
-    rules[6] = new Rule(-4, new int[]{6});
-
-    aliases = new Dictionary<int, string>();
-    aliases.Add(4, "AND");
-    aliases.Add(5, "OR");
+    rules[4] = new Rule(-1, new int[]{-4});
+    rules[5] = new Rule(-3, new int[]{-5});
+    rules[6] = new Rule(-3, new int[]{-5,-4});
+    rules[7] = new Rule(-4, new int[]{-6});
+    rules[8] = new Rule(-4, new int[]{-6,-3});
+    rules[9] = new Rule(-5, new int[]{-7});
+    rules[10] = new Rule(-6, new int[]{-8});
+    rules[11] = new Rule(-6, new int[]{-8,-6});
+    rules[12] = new Rule(-8, new int[]{5});
+    rules[13] = new Rule(-7, new int[]{-9});
+    rules[14] = new Rule(-7, new int[]{-10});
+    rules[15] = new Rule(-9, new int[]{-11});
+    rules[16] = new Rule(-9, new int[]{-11,-10});
+    rules[17] = new Rule(-11, new int[]{4});
+    rules[18] = new Rule(-10, new int[]{-12});
+    rules[19] = new Rule(-10, new int[]{-12,-9});
+    rules[20] = new Rule(-12, new int[]{6});
   }
 
   protected override void Initialize() {
@@ -97,6 +119,26 @@ public class Parser: ShiftReduceParser<ValueType, LexLocation>
 #pragma warning disable 162, 1522
     switch (action)
     {
+      case 9: // line -> parts
+#line 38 "Grammar1/my_parser.y"
+         { CurrentSemanticValue = ValueStack[ValueStack.Depth-1]; CurrentLocationSpan = LocationStack[LocationStack.Depth-1]; Console.Write("<${0}${1}..${2}${3}>", LocationStack[LocationStack.Depth-1].StartLine, LocationStack[LocationStack.Depth-1].StartColumn, LocationStack[LocationStack.Depth-1].EndLine, LocationStack[LocationStack.Depth-1].EndColumn); }
+#line default
+        break;
+      case 12: // eol -> EOL
+#line 47 "Grammar1/my_parser.y"
+       { CurrentSemanticValue = ValueStack[ValueStack.Depth-1]; CurrentLocationSpan = LocationStack[LocationStack.Depth-1]; Console.WriteLine(".\n"); }
+#line default
+        break;
+      case 17: // space -> SPACE
+#line 61 "Grammar1/my_parser.y"
+            { CurrentSemanticValue = ValueStack[ValueStack.Depth-1]; CurrentLocationSpan = LocationStack[LocationStack.Depth-1]; Console.Write("_"); }
+#line default
+        break;
+      case 20: // word -> WORD
+#line 70 "Grammar1/my_parser.y"
+        { CurrentSemanticValue = ValueStack[ValueStack.Depth-1]; CurrentLocationSpan = LocationStack[LocationStack.Depth-1]; Console.Write(ValueStack[ValueStack.Depth-1].sVal); }
+#line default
+        break;
     }
 #pragma warning restore 162, 1522
   }
@@ -111,7 +153,7 @@ public class Parser: ShiftReduceParser<ValueType, LexLocation>
         return CharToString((char)terminal);
   }
 
-#line 32 "Grammar1/my_parser.y"
+#line 75 "Grammar1/my_parser.y"
 // Don't forget to declare the Parser-Constructor
 public Parser(Scanner.Scanner scnr) : base(scnr) { }
 #line default

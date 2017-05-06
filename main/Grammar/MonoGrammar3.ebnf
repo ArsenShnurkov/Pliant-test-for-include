@@ -25,25 +25,24 @@ rest_of_line := rest_of_line_char, { rest_of_line_char } ;
 rest_of_line_char := ac - (cr | lf);
 
 
-
-virtualhost:=("V"|"v"),("I"|"i"),("R"|"r"),("T"|"t"),("U"|"u"),("A"|"a"),("L"|"l"),("H"|"h"),("O"|"o"),("S"|"s"),("T"|"t");
-servername:=("S"|"s"),("E"|"e"),("R"|"r"),("V"|"v"),("E"|"e"),("R"|"r"),("N"|"n"),("A"|"a"),("M"|"m"),("E"|"e");
-addmonoapplications:=("A"|"a"),("D"|"d"),("D"|"d"),("M"|"m"),("O"|"o"),("N"|"n"),("O"|"o"),("A"|"a"),("P"|"p"),("P"|"p"),("L"|"l"),("I"|"i"),("C"|"c"),("A"|"a"),("T"|"t"),("I"|"i"),("O"|"o"),("N"|"n"),("S"|"s");
-
 ws := [ ows ] ; (* white space *)
 ows := ows_element , { ows_element } ;
-ows_element := iws_element | newline ; (* overline white space *)
+ows_element := iws_element | newline ;
 iws := iws_element , { iws_element } ; 
-iws_element := space_or_tab ;  (* inside of line white space *)
+iws_element := space_or_tab ;
 
 space_or_tab := ( space | tab ) , { space | tab } ;
 newline := cr | lf | ( cr , lf ) ;
 nonspace := ac - ( space | tab | cr | lf ) ;
 
-string := dquote , { string_fragment | escape_sequence } , dquote ; (* string should keep spaces *)
+string := dquote , { string_fragment | escape_sequence } , dquote ;
 string_fragment := string_fragment_element , { string_fragment_element } ;
 string_fragment_element := ac  - (dquote | backslash);
-escape_sequence := backslash , ( dquote | backslash | dot );
+escape_sequence := backslash , ( dquote | backslash );
+
+virtualhost:=("V"|"v"),("I"|"i"),("R"|"r"),("T"|"t"),("U"|"u"),("A"|"a"),("L"|"l"),("H"|"h"),("O"|"o"),("S"|"s"),("T"|"t");
+servername:=("S"|"s"),("E"|"e"),("R"|"r"),("V"|"v"),("E"|"e"),("R"|"r"),("N"|"n"),("A"|"a"),("M"|"m"),("E"|"e");
+addmonoapplications:=("A"|"a"),("D"|"d"),("D"|"d"),("M"|"m"),("O"|"o"),("N"|"n"),("O"|"o"),("A"|"a"),("P"|"p"),("P"|"p"),("L"|"l"),("I"|"i"),("C"|"c"),("A"|"a"),("T"|"t"),("I"|"i"),("O"|"o"),("N"|"n"),("S"|"s");
 
 letter := ? Terminals.Letter ? ;
 letter_or_digit := ? Terminals.LetterOrDigit ? ;
@@ -56,8 +55,6 @@ lf := "\x0A" ;
 cr := "\x0D" ;
 space := "\x20" ;
 dquote := "\x22";
-(* apostrophe := "\x27"; *)
 asterisk := "\x2A" ;
-dot := "\x2E" ;
 slash := "\x2F" ;
 backslash := "\x5C" ;

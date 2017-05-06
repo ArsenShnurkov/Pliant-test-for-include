@@ -37,8 +37,12 @@
 	<ItemGroup>
 		<Compile Include="Program.cs" />
 		<Compile Include="Properties\AssemblyInfo.cs" />
-		<Compile Include="Grammar1\Scanner.cs" />
-		<Compile Include="Grammar1\Parser.cs" />
+		<Compile Include="Grammar1\Parser.cs">
+			<DependentUpon>Grammar1\my_parser.y</DependentUpon>
+		</Compile>
+		<Compile Include="Grammar1\Scanner.cs">
+			<DependentUpon>Grammar1\my_lexer.lex</DependentUpon>
+		</Compile>
 	</ItemGroup>
 	<ItemGroup>
 		<Folder Include="Grammar1\" />

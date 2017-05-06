@@ -1,3 +1,4 @@
+%using QUT.Gppg;         // include LexLocation class declaration
 %using Parser;           // include the namespace of the generated Parser-class
 %namespace Scanner       // names the Namespace of the generated Scanner-class
 %visibility public       // visibility of the types "Tokens","ScanBase","Scanner"
@@ -12,16 +13,18 @@
 %{ //user-specified code will be copied in the Output-file
 %}
 
-OR [Oo][Rr]
-AND [Aa][Nn][Dd]
-Identifier [A-Za-z][A-Za-z0-9_]*
+EOL  \r\n?|\n
+WS  [ \t]+
+WORD [^ \t\n\r]+
 
 %% //Rules Section
-%{ //user-code that will be executed before getting the next token
+
+{EOL}         {yylval.sVal = yytext; return (int)Tokens.EOL;}
+{WS}          {yylval.sVal = yytext; return (int)Tokens.SPACE;}
+{WORD}        {yylval.sVal = yytext; return (int)Tokens.WORD;}
+
+%{ //user-code that will be executed before return (with "finally")
+	yylloc = new LexLocation(tokLin,tokCol,tokELin,tokECol);
 %}
-
-{OR}           {return (int)Tokens.kwAND;}
-{AND}          {return (int)Tokens.kwAND;}
-{Identifier}   {yylval.sVal = yytext; return (int)Tokens.ID;}
-
 %% //User-code Section
+
