@@ -1,5 +1,4 @@
 ﻿using System;
-//using ....;
 using QUT.Gppg;
 using System.IO;
 using System.Reflection;
@@ -28,11 +27,10 @@ namespace NCParser
 			scanner.SetSource(file);
 			var parser = new Parser.Parser(scanner);*/
 
-			string simple_test = "a\naaa\n\naa\nssss";
-			var ms = new MemoryStream(Encoding.UTF8.GetBytes(simple_test));
-			var scanner = new Grammar1.Scanner();
+			var ms = new FileStream("/var/calculate/remote/distfiles/egit-src/Pliant-test-for-include.git/main/bin/Debug/cache.txt", FileMode.Open);
+			var scanner = new Grammar3.Scanner();
 			scanner.SetSource(ms);
-			var parser = new Grammar1.Parser(scanner);
+			var parser = new Grammar3.Parser(scanner);
 			if (parser.Parse())
 			{
 				Console.WriteLine("Success");

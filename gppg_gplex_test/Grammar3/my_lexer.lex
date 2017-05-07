@@ -1,6 +1,6 @@
 %using QUT.Gppg;         // include LexLocation class declaration
-%using Grammar2;         // include the namespace of the generated Parser-class
-%namespace Grammar2      // names the Namespace of the generated Scanner-class
+%using Grammar3;         // include the namespace of the generated Parser-class
+%namespace Grammar3      // names the Namespace of the generated Scanner-class
 %visibility public       // visibility of the types "Tokens","ScanBase","Scanner"
 %scannertype Scanner     // names the Scannerclass to "Scanner"
 %scanbasetype ScanBase   // names the Scanbaseclass to "ScanBase"
