@@ -10,14 +10,49 @@
 %token SPACE
 %token EOL
 %token WORD
-%token LSB, FORWADRSLASH, RSBI, RSB
+%token LSB, FORWARDSLASH, RSBI, RSB
 
 %union { 
 		public int iVal;
 		public string sVal;
 }
 
+%start content
+
 %% //Grammar Rules Section
+
+eols
+	: eol
+	| eol eols
+	;
+
+eol 
+	: EOL { Console.Write("\n"); }
+	;
+
+word
+	: WORD { Console.Write($<sVal>1); }
+	;
+
+spaces
+    : SPACE { Console.Write(new string('_',$$.sVal.Length)); }
+    ;
+lsb
+	: LSB { Console.Write("<"); }
+	;
+rsb
+	: RSB { Console.Write(">"); }
+	;
+rsbi
+	: RSBI { Console.Write("~>~"); }
+	;
+rsb_or_rsbi
+	: rsb
+	| rsbi
+	;
+forwardslash
+	: FORWARDSLASH { Console.Write("~/~"); }
+	;
 
 content
     : /* nothing */
@@ -30,43 +65,32 @@ nonempty_content /* describe starting eols */
 	| noneol_content
     ;
 
-eols
-	: eol
-	| eol eols
-	;
-
-eol 
-	: EOL { Console.Write("\\n"); }
-	;
-
 noneol_content /* describe starting spaces */
 	: spaces
 	| spaces nonspace_content
 	| nonspace_content
 	;
 
-spaces
-    : SPACE { Console.Write($$.sVal); }
-    ;
-
 nonspace_content
 	: parts
+	| parts spaces
 	| parts eol
+	| parts spaces eol
 	| parts eol nonempty_content
+	| parts spaces eol nonempty_content
 	;
 
 parts
     : instruction
-    | section
+    | lsb_spaces section
     ;
-
+lsb_spaces
+	: lsb
+	| lsb spaces
+	;
 instruction
 	: word
 	| word spaces instruction_parameters
-	;
-
-word
-	: WORD { Console.Write($<sVal>1); }
 	;
 
 instruction_parameters
@@ -76,28 +100,41 @@ instruction_parameters
 
 instruction_word
 	: word
-	| LSB
-	| RSB
-	| RSBI
+	| lsb
+	| rsb
+	| rsbi
 	;
 
 section
-	: section_start content section_end
+	: section_start section_content section_end
 	;
 
 section_start
-	: directive_opening section_name RSB eol
-	| directive_opening section_name spaces RSB eol
-	| directive_opening section_name spaces nonspace_section_parameters RSB eol
+	: word rsb eol
+	| word spaces rsb eol
+	| word spaces nonspace_section_parameters rsb eol
 	;
 
-directive_opening
-	: lsb
-	| lsb spaces
+section_content
+    : lsb_spaces
+    | section_nonempty_content
+    ;
+
+section_nonempty_content /* describe starting eols */
+	: eols lsb_spaces
+	| eols section_noneol_content
+	| section_noneol_content
+    ;
+
+section_noneol_content /* describe starting spaces */
+	: spaces lsb_spaces
+	| spaces section_nonspace_content
+	| section_nonspace_content
 	;
 
-section_name
-	: WORD
+section_nonspace_content
+	: parts eol lsb_spaces
+	| parts eol section_nonempty_content
 	;
 
 spaces_section_parameters
@@ -112,26 +149,15 @@ nonspace_section_parameters
 
 parameters_word /* может содержать ">" ! */
 	: word
-	| LSB { Console.Write($<sVal>1); }
-	| RSBI { Console.Write($<sVal>1); }
+	| lsb
+	| rsbi
 	;
 
 section_end
-	: directive_closing section_name rsb
-	| directive_closing spaces section_name rsb
-	;
-
-directive_closing
-	: lsb FORWADRSLASH
-	| lsb spaces FORWADRSLASH
-	;
- 
-lsb
-	: LSB
-	;
-rsb
-	: RSB
-	| RSBI
+	: forwardslash spaces word spaces rsb_or_rsbi {Console.Write("1");} 
+	| forwardslash spaces word rsb_or_rsbi {Console.Write("2");}
+	| forwardslash word spaces rsb_or_rsbi {Console.Write("3");}
+	| forwardslash word rsb_or_rsbi {Console.Write("4");}
 	;
 
 %% // User-code Section

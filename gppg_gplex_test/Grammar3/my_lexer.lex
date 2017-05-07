@@ -15,7 +15,7 @@
 
 EOL  \r\n?|\n
 WS  [ \t]+
-WORD [^ \t\n\r<]+
+WORD [^ \t\n\r><]+
 LSB [<]
 RSB [>]
 
@@ -26,7 +26,7 @@ RSB [>]
 {LSB}         {return (int)Tokens.LSB;}
 {RSB}/{EOL}   {return (int)Tokens.RSB;}
 {RSB}         {return (int)Tokens.RSBI;}
-[/]          {return (int)Tokens.FORWADRSLASH;}
+[/]          {return (int)Tokens.FORWARDSLASH;}
 {WORD}        {yylval.sVal = yytext; return (int)Tokens.WORD;}
 
 %{ //user-code that will be executed before return (with "finally")

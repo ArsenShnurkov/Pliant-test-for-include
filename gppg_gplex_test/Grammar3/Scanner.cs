@@ -6,9 +6,9 @@
 //
 //  GPLEX Version:  1.2.2
 //  Machine:  sabayon
-//  DateTime: 5/7/2017 9:46:09 PM
+//  DateTime: 5/7/2017 11:49:55 PM
 //  UserName: user
-//  GPLEX input file <Grammar3/my_lexer.lex - 5/7/2017 9:44:23 PM>
+//  GPLEX input file <Grammar3/my_lexer.lex - 5/7/2017 11:22:17 PM>
 //  GPLEX frame file <embedded resource>
 //
 //  Option settings: parser, minimize
@@ -169,24 +169,21 @@ namespace Grammar3
 
     static Table[] NxS = new Table[11] {
 /* NxS[   0] */ new Table(0, 0, 0, null),
-/* NxS[   1] */ new Table(9, 52, 1, new sbyte[] {-1, -1, 1, 1, -1, 1, 
+/* NxS[   1] */ new Table(9, 54, 1, new sbyte[] {-1, -1, 1, 1, -1, 1, 
           1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
           1, -1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
-          1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, -1}),
+          1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, -1, 1, -1}),
 /* NxS[   2] */ new Table(9, 24, -1, new sbyte[] {2, -1, -1, -1, -1, -1, 
           -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 
           -1, 2}),
 /* NxS[   3] */ new Table(0, 0, -1, null),
 /* NxS[   4] */ new Table(10, 1, -1, new sbyte[] {3}),
-/* NxS[   5] */ new Table(9, 52, 1, new sbyte[] {-1, -1, 1, 1, -1, 1, 
+/* NxS[   5] */ new Table(9, 54, 1, new sbyte[] {-1, -1, 1, 1, -1, 1, 
           1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
           1, -1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
-          1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, -1}),
+          1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, -1, 1, -1}),
 /* NxS[   6] */ new Table(0, 0, -1, null),
-/* NxS[   7] */ new Table(9, 52, 1, new sbyte[] {-1, 8, 1, 1, 9, 1, 
-          1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
-          1, -1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
-          1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, -1}),
+/* NxS[   7] */ new Table(10, 4, -1, new sbyte[] {8, -1, -1, 9}),
 /* NxS[   8] */ new Table(0, 0, -1, null),
 /* NxS[   9] */ new Table(10, 1, -1, new sbyte[] {8}),
 /* NxS[  10] */ new Table(9, 54, 1, new sbyte[] {2, 3, 1, 1, 4, 1, 
@@ -632,7 +629,7 @@ yylval.sVal = yytext; return (int)Tokens.SPACE;
 yylval.sVal = yytext; return (int)Tokens.EOL;
             break;
         case 5:
-return (int)Tokens.FORWADRSLASH;
+return (int)Tokens.FORWARDSLASH;
             break;
         case 6:
 return (int)Tokens.LSB;

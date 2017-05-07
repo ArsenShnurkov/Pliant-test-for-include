@@ -28,9 +28,9 @@ namespace NCParser
 			var parser = new Parser.Parser(scanner);*/
 
 			var ms = new FileStream("/var/calculate/remote/distfiles/egit-src/Pliant-test-for-include.git/main/bin/Debug/cache.txt", FileMode.Open);
-			var scanner = new Grammar3.Scanner();
+			var scanner = new Grammar2.Scanner();
 			scanner.SetSource(ms);
-			var parser = new Grammar3.Parser(scanner);
+			var parser = new Grammar2.Parser(scanner);
 			if (parser.Parse())
 			{
 				Console.WriteLine("Success");
