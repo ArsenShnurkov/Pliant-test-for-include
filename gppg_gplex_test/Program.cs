@@ -1,8 +1,6 @@
 ﻿using System;
 //using ....;
 using QUT.Gppg;
-using Scanner;
-using Parser;
 using System.IO;
 using System.Reflection;
 using System.Text;
@@ -32,9 +30,9 @@ namespace NCParser
 
 			string simple_test = "a\naaa\n\naa\nssss";
 			var ms = new MemoryStream(Encoding.UTF8.GetBytes(simple_test));
-			var scanner = new Scanner.Scanner();
+			var scanner = new Grammar1.Scanner();
 			scanner.SetSource(ms);
-			var parser = new Parser.Parser(scanner);
+			var parser = new Grammar1.Parser(scanner);
 			if (parser.Parse())
 			{
 				Console.WriteLine("Success");

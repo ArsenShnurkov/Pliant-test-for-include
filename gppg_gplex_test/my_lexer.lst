@@ -4,13 +4,14 @@
 // ==========================================================================
 //  Version:  1.2.2
 //  Machine:  sabayon
-//  DateTime: 5/6/2017 2:36:36 PM
+//  DateTime: 5/7/2017 10:42:38 AM
 //  UserName: user
 // ==========================================================================
 
 
-%using Parser;           // include the namespace of the generated Parser-class
-%namespace Scanner       // names the Namespace of the generated Scanner-class
+%using QUT.Gppg;         // include LexLocation class declaration
+%using Grammar2;         // include the namespace of the generated Parser-class
+%namespace Grammar2      // names the Namespace of the generated Scanner-class
 %visibility public       // visibility of the types "Tokens","ScanBase","Scanner"
 %scannertype Scanner     // names the Scannerclass to "Scanner"
 %scanbasetype ScanBase   // names the Scanbaseclass to "ScanBase"
@@ -23,24 +24,33 @@
 %{ //user-specified code will be copied in the Output-file
 %}
 
-EOL (\r\n?)|\n
+EOL  \r\n?|\n
 WS  [ \t]+
-WORD [^ \t]+
+WORD [^ \t\n\r]+
 
 %% //Rules Section
 
-%{ //user-code that will be executed before getting the next token
-}%
-// Error: Parser error <Syntax error, unexpected }> 
-// Error: Unexpected symbol, skipping to  <%}> 
-// -------------------------------------------------
-
-{EOL}         {return (int)Tokens.EOL;}
-{WS}          {return (int)Tokens.WS;}
+{EOL}         {yylval.sVal = yytext; return (int)Tokens.EOL;}
+{WS}          {yylval.sVal = yytext; return (int)Tokens.SPACE;}
 {WORD}        {yylval.sVal = yytext; return (int)Tokens.WORD;}
+//^^^^
+// Warning: This pattern always overrides "[<]" 
+// Warning: This pattern always overrides "[>]" 
+// Warning: This pattern always overrides "[\\]" 
+// ----------------------------------------------
+[<]           {return (int)Tokens.LSB;}
+// Warning: This pattern always overridden by "{WORD}" 
+// ----------------------------------------------------
+[>]           {return (int)Tokens.RSB;}
+// Warning: This pattern always overridden by "{WORD}" 
+// ----------------------------------------------------
+[\\]           {return (int)Tokens.BACKSLASH;}
+//^^
+// Warning: This pattern always overridden by "{WORD}" 
+// ----------------------------------------------------
 
 %{ //user-code that will be executed before return (with "finally")
-	yylloc = new LexLocation(tokLin,tokCol,tokELin,tokECol)
+	yylloc = new LexLocation(tokLin,tokCol,tokELin,tokECol);
 %}
 %% //User-code Section
 

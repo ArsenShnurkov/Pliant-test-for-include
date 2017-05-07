@@ -1,6 +1,6 @@
 %using QUT.Gppg;         // include LexLocation class declaration
-%using Grammar1;         // include the namespace of the generated Parser-class
-%namespace Grammar1      // names the Namespace of the generated Scanner-class
+%using Grammar2;         // include the namespace of the generated Parser-class
+%namespace Grammar2      // names the Namespace of the generated Scanner-class
 %visibility public       // visibility of the types "Tokens","ScanBase","Scanner"
 %scannertype Scanner     // names the Scannerclass to "Scanner"
 %scanbasetype ScanBase   // names the Scanbaseclass to "ScanBase"
@@ -15,12 +15,15 @@
 
 EOL  \r\n?|\n
 WS  [ \t]+
-WORD [^ \t\n\r]+
+WORD [^ \t\n\r<]+
 
 %% //Rules Section
 
 {EOL}         {yylval.sVal = yytext; return (int)Tokens.EOL;}
 {WS}          {yylval.sVal = yytext; return (int)Tokens.SPACE;}
+[<]           {return (int)Tokens.LSB;}
+[>]           {return (int)Tokens.RSB;}
+[\\]          {return (int)Tokens.BACKSLASH;}
 {WORD}        {yylval.sVal = yytext; return (int)Tokens.WORD;}
 
 %{ //user-code that will be executed before return (with "finally")

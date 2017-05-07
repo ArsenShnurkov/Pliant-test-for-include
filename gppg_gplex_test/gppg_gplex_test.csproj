@@ -43,18 +43,31 @@
 		<Compile Include="Grammar1\Scanner.cs">
 			<DependentUpon>Grammar1\my_lexer.lex</DependentUpon>
 		</Compile>
+		<Compile Include="Grammar2\Parser.cs">
+		  <DependentUpon>my_parser.y</DependentUpon>
+		</Compile>
+		<Compile Include="Grammar2\Scanner.cs">
+		  <DependentUpon>my_lexer.lex</DependentUpon>
+		</Compile>
 	</ItemGroup>
 	<ItemGroup>
 		<Folder Include="Grammar1\" />
+		<Folder Include="Grammar2\" />
 	</ItemGroup>
 	<ItemGroup>
 		<Gppg Include="Grammar1\my_parser.y">
 			<Output>Grammar1\Parser.cs</Output>
 		</Gppg>
+		<Gppg Include="Grammar2\my_parser.y">
+			<Output>Grammar2\Parser.cs</Output>
+		</Gppg>
 	</ItemGroup>
 	<ItemGroup>
 		<Gplex Include="Grammar1\my_lexer.lex">
 			<Output>Grammar1\Scanner.cs</Output>
+		</Gplex>
+		<Gplex Include="Grammar2\my_lexer.lex">
+			<Output>Grammar2\Scanner.cs</Output>
 		</Gplex>
 	</ItemGroup>
 <!--

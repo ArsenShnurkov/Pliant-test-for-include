@@ -1,7 +1,7 @@
 %scanbasetype ScanBase  //names the ScanBaseclass to "ScanBase"
-%using Scanner      // include the Namespace of the scanner-class
+%using Grammar1      // include the Namespace of the scanner-class
 
-%namespace Parser   // names the namespace of the Parser-class
+%namespace Grammar1   // names the namespace of the Parser-class
 %parsertype Parser      //names the Parserclass to "Parser"
 
 %tokentype Tokens       //names the Tokensenumeration to "Tokens"
@@ -79,4 +79,4 @@ word
 %% // User-code Section
 
 // Don't forget to declare the Parser-Constructor
-public Parser(Scanner.Scanner scnr) : base(scnr) { }
+public Parser(Grammar1.Scanner scnr) : base(scnr) { }
