@@ -1,7 +1,7 @@
 %scanbasetype ScanBase  //names the ScanBaseclass to "ScanBase"
-%using Grammar2      // include the Namespace of the scanner-class
+%using Grammar4      // include the Namespace of the scanner-class
 
-%namespace Grammar2   // names the namespace of the Parser-class
+%namespace Grammar4   // names the namespace of the Parser-class
 %parsertype Parser      //names the Parserclass to "Parser"
 
 %tokentype Tokens       //names the Tokensenumeration to "Tokens"
@@ -73,8 +73,11 @@ noneol_content /* describe starting spaces */
 
 nonspace_content
 	: parts
+	| parts spaces
 	| parts eol
+	| parts spaces eol
 	| parts eol nonempty_content
+	| parts spaces eol nonempty_content
 	;
 
 parts
@@ -160,4 +163,4 @@ section_end
 %% // User-code Section
 
 // Don't forget to declare the Parser-Constructor
-public Parser(Grammar2.Scanner scnr) : base(scnr) { }
+public Parser(Grammar4.Scanner scnr) : base(scnr) { }
