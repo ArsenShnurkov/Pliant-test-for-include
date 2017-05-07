@@ -24,8 +24,7 @@ RSB [>]
 {EOL}         {yylval.sVal = yytext; return (int)Tokens.EOL;}
 {WS}          {yylval.sVal = yytext; return (int)Tokens.SPACE;}
 {LSB}         {return (int)Tokens.LSB;}
-{RSB}/{EOL}   {return (int)Tokens.RSB;}
-{RSB}         {return (int)Tokens.RSBI;}
+{RSB}         {return (int)Tokens.RSB;}
 [/]           {return (int)Tokens.FORWARDSLASH;}
 {WORD}        {yylval.sVal = yytext; return (int)Tokens.WORD;}
 

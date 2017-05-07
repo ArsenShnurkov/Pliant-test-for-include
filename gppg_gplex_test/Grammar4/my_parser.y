@@ -10,7 +10,7 @@
 %token SPACE
 %token EOL
 %token WORD
-%token LSB, FORWARDSLASH, RSBI, RSB
+%token LSB, FORWARDSLASH, RSB
 
 %union { 
 		public int iVal;
@@ -43,13 +43,6 @@ lsb
 rsb
 	: RSB { Console.Write(">"); }
 	;
-rsbi
-	: RSBI { Console.Write("~>~"); }
-	;
-rsb_or_rsbi
-	: rsb
-	| rsbi
-	;
 forwardslash
 	: FORWARDSLASH { Console.Write("~/~"); }
 	;
@@ -73,16 +66,14 @@ noneol_content /* describe starting spaces */
 
 nonspace_content
 	: parts
-	| parts spaces
 	| parts eol
-	| parts spaces eol
 	| parts eol nonempty_content
-	| parts spaces eol nonempty_content
 	;
 
 parts
     : instruction
     | lsb_spaces section
+    | lsb_spaces section spaces
     ;
 lsb_spaces
 	: lsb
@@ -100,9 +91,6 @@ instruction_parameters
 
 instruction_word
 	: word
-	| lsb
-	| rsb
-	| rsbi
 	;
 
 section
@@ -112,7 +100,7 @@ section
 section_start
 	: word rsb eol
 	| word spaces rsb eol
-	| word spaces nonspace_section_parameters rsb eol
+	| word spaces nonspace_section_parameters eol
 	;
 
 section_content
@@ -137,27 +125,37 @@ section_nonspace_content
 	| parts eol section_nonempty_content
 	;
 
+section_parameters_operation
+	: lsb
+    | rsb
+	;
+
+section_parameters_operations
+	: section_parameters_operation spaces_section_parameters
+	| section_parameters_operation nonspace_section_parameters
+	;
+
 spaces_section_parameters
-	: spaces
+	: spaces rsb
 	| spaces nonspace_section_parameters
+	| spaces section_parameters_operations
 	;
 
 nonspace_section_parameters
-	: parameters_word
+	: parameters_word rsb
 	| parameters_word spaces_section_parameters
+	| parameters_word section_parameters_operations
 	;
 
-parameters_word /* может содержать ">" ! */
+parameters_word 
 	: word
-	| lsb
-	| rsbi
 	;
 
 section_end
-	: forwardslash spaces word spaces rsb_or_rsbi {Console.Write("1");} 
-	| forwardslash spaces word rsb_or_rsbi {Console.Write("2");}
-	| forwardslash word spaces rsb_or_rsbi {Console.Write("3");}
-	| forwardslash word rsb_or_rsbi {Console.Write("4");}
+	: forwardslash spaces word spaces rsb
+	| forwardslash spaces word rsb
+	| forwardslash word spaces rsb
+	| forwardslash word rsb
 	;
 
 %% // User-code Section
