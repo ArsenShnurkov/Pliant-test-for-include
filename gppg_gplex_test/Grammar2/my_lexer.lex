@@ -16,13 +16,16 @@
 EOL  \r\n?|\n
 WS  [ \t]+
 WORD [^ \t\n\r<]+
+LSB [<]
+RSB [>]
 
 %% //Rules Section
 
 {EOL}         {yylval.sVal = yytext; return (int)Tokens.EOL;}
 {WS}          {yylval.sVal = yytext; return (int)Tokens.SPACE;}
-[<]           {return (int)Tokens.LSB;}
-[>]           {return (int)Tokens.RSB;}
+{LSB}         {return (int)Tokens.LSB;}
+{RSB}/{EOL}   {return (int)Tokens.RSB;}
+{RSB}         {return (int)Tokens.RSBI;}
 [\\]          {return (int)Tokens.BACKSLASH;}
 {WORD}        {yylval.sVal = yytext; return (int)Tokens.WORD;}
 

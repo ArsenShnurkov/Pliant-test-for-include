@@ -10,7 +10,7 @@
 %token SPACE
 %token EOL
 %token WORD
-%token LSB, BACKSLASH, RSB
+%token LSB, BACKSLASH, RSBI, RSB
 
 %union { 
 		public int iVal;
@@ -100,14 +100,16 @@ section_parameters
 	| section_name_word spaces section_parameters
 	;
 
-section_name_word /* не может содержать ">" ! Надо переписать грамматику, чтобы могло. ? */
+section_name_word /* может содержать ">" ! */
 	: WORD
+	| LSB { Console.Write($<sVal>1); }
+	| RSBI { Console.Write($<sVal>1); }
 	;
 
 word
 	: WORD { Console.Write($<sVal>1); }
 	| LSB { Console.Write($<sVal>1); }
-	| RSB { Console.Write($<sVal>1); }
+	| RSBI { Console.Write($<sVal>1); }
 	;
 
 spaces
