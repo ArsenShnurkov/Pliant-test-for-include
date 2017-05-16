@@ -41,9 +41,23 @@ word
 	: WORD { Console.Write($<sVal>1); }
 	;
 
+iws 
+	: iws_element
+	| iws_element iws
+	;
+
+iws_element
+	: spaces
+	| glue
+	;
+
 spaces
     : SPACE { Console.Write(new string('_',$$.sVal.Length)); }
     ;
+
+glue
+	: BACKSLASH eol
+	;
 
 lsb
 	: LSB { Console.Write("<"); }
@@ -51,6 +65,7 @@ lsb
 rsb
 	: RSB { Console.Write(">"); }
 	;
+
 forwardslash
 	: FORWARDSLASH { Console.Write("~/~"); }
 	;
@@ -67,8 +82,8 @@ nonempty_content /* describe starting eols */
     ;
 
 noneol_content /* describe starting spaces */
-	: spaces
-	| spaces nonspace_content
+	: iws
+	| iws nonspace_content
 	| nonspace_content
 	;
 
@@ -81,20 +96,20 @@ nonspace_content
 parts
     : instruction
     | lsb_spaces section
-    | lsb_spaces section spaces
+    | lsb_spaces section iws
     ;
 lsb_spaces
 	: lsb
-	| lsb spaces
+	| lsb iws
 	;
 instruction
 	: word
-	| word spaces instruction_parameters
+	| word iws instruction_parameters
 	;
 
 instruction_parameters
 	: instruction_word
-	| instruction_word spaces instruction_parameters
+	| instruction_word iws instruction_parameters
 	;
 
 instruction_word
@@ -118,8 +133,8 @@ section
 
 section_start
 	: word rsb eol
-	| word spaces rsb eol
-	| word spaces nonspace_section_parameters eol
+	| word iws rsb eol
+	| word iws nonspace_section_parameters eol
 	;
 
 section_content
@@ -134,8 +149,8 @@ section_nonempty_content /* describe starting eols */
     ;
 
 section_noneol_content /* describe starting spaces */
-	: spaces lsb_spaces
-	| spaces section_nonspace_content
+	: iws lsb_spaces
+	| iws section_nonspace_content
 	| section_nonspace_content
 	;
 
@@ -155,9 +170,9 @@ section_parameters_operations
 	;
 
 spaces_section_parameters
-	: spaces rsb
-	| spaces nonspace_section_parameters
-	| spaces section_parameters_operations
+	: iws rsb
+	| iws nonspace_section_parameters
+	| iws section_parameters_operations
 	;
 
 nonspace_section_parameters
@@ -173,9 +188,9 @@ parameters_word
 	;
 
 section_end
-	: forwardslash spaces word spaces rsb
-	| forwardslash spaces word rsb
-	| forwardslash word spaces rsb
+	: forwardslash iws word iws rsb
+	| forwardslash iws word rsb
+	| forwardslash word iws rsb
 	| forwardslash word rsb
 	;
 

@@ -14,7 +14,7 @@
 %}
 
 EOL  \r\n?|\n
-WS  [ \t]+
+SPACE  [ \t]+
 WORD [^\\/" \t\n\r><]+
 LSB [<]
 RSB [>]
@@ -24,7 +24,7 @@ DSTRING {DQUOTE}([^"\\]*(\\.[^"\\]*)*){DQUOTE}
 %% //Rules Section
 
 {EOL}         {yylval.sVal = yytext; return (int)Tokens.EOL;}
-{WS}          {yylval.sVal = yytext; return (int)Tokens.SPACE;}
+{SPACE}          {yylval.sVal = yytext; return (int)Tokens.SPACE;}
 {LSB}         {return (int)Tokens.LSB;}
 {RSB}         {return (int)Tokens.RSB;}
 {WORD}        {yylval.sVal = yytext; return (int)Tokens.WORD;}
