@@ -1,7 +1,7 @@
 %scanbasetype ScanBase  //names the ScanBaseclass to "ScanBase"
-%using Grammar4      // include the Namespace of the scanner-class
+%using Grammar5      // include the Namespace of the scanner-class
 
-%namespace Grammar4   // names the namespace of the Parser-class
+%namespace Grammar5   // names the namespace of the Parser-class
 %parsertype Parser      //names the Parserclass to "Parser"
 
 %tokentype Tokens       //names the Tokensenumeration to "Tokens"
@@ -182,4 +182,4 @@ section_end
 %% // User-code Section
 
 // Don't forget to declare the Parser-Constructor
-public Parser(Grammar4.Scanner scnr) : base(scnr) { }
+public Parser(Scanner scnr) : base(scnr) { }

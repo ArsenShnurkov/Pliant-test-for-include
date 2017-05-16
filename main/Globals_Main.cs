@@ -63,16 +63,9 @@ partial class Globals
 	{
 		try
 		{
-			/*
-			var atm = AvotTestGrammar.Match("000111000");
-			if (atm.Success == false)
-			{
-				throw new FormatException($"Error when reparsing {atm.ErrorMessage}");
-			}
-			var v_atm = atm.Find("v_directive", true);
-			*/
-
-			if (File.Exists(cachefilename) == false)
+			var fi = new FileInfo(cachefilename);
+			var filePathAndName = fi.FullName;
+			//if (File.Exists(filePathAndName) == false)
 			{
 				string apacheConfigFileName = Path.Combine(ConfigurationManager.AppSettings["ApacheConfigFilePath"].ToString(),"httpd.conf");;
 				var match = LoadConfig(apacheConfigFileName).Value;
@@ -93,9 +86,11 @@ partial class Globals
 				string shortened_content = sb_short.ToString();
 				File.WriteAllText(cachefilename, shortened_content);
 			}
+			/*
 			string short_text = File.ReadAllText(cachefilename);
 			var res = ExtractPairsFromPreparsedText(short_text);
 			Console.WriteLine(res.Count);
+			*/
 		}
 		catch (Exception ex)
 		{

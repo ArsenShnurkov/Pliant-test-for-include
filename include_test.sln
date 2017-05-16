@@ -1,7 +1,7 @@
 
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "main", "main\main.csproj", "{0AC25070-0792-4770-8F3F-11056ABE33F4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EtoParsePreprocessor", "main\EtoParsePreprocessor.csproj", "{0AC25070-0792-4770-8F3F-11056ABE33F4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pliant", "..\Pliant.git\libraries\Pliant\Pliant.csproj", "{5C23805F-0FFC-4039-B853-E5ACBE63A3C0}"
 EndProject

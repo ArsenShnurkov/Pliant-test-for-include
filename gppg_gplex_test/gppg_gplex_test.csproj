@@ -61,12 +61,19 @@
 		<Compile Include="Grammar4\Scanner.cs">
 		  <DependentUpon>my_lexer.lex</DependentUpon>
 		</Compile>
+		<Compile Include="Grammar5\Parser.cs">
+		  <DependentUpon>my_parser.y</DependentUpon>
+		</Compile>
+		<Compile Include="Grammar5\Scanner.cs">
+		  <DependentUpon>my_lexer.lex</DependentUpon>
+		</Compile>
 	</ItemGroup>
 	<ItemGroup>
 		<Folder Include="Grammar1\" />
 		<Folder Include="Grammar2\" />
 		<Folder Include="Grammar3\" />
 		<Folder Include="Grammar4\" />
+		<Folder Include="Grammar5\" />
 	</ItemGroup>
 	<ItemGroup>
 		<Gppg Include="Grammar1\my_parser.y">
@@ -81,6 +88,9 @@
 		<Gppg Include="Grammar4\my_parser.y">
 		  <Output>Grammar4\Parser.cs</Output>
 		</Gppg>
+		<Gppg Include="Grammar5\my_parser.y">
+		  <Output>Grammar5\Parser.cs</Output>
+		</Gppg>
 	</ItemGroup>
 	<ItemGroup>
 		<Gplex Include="Grammar1\my_lexer.lex">
@@ -94,6 +104,9 @@
 		</Gplex>
 		<Gplex Include="Grammar4\my_lexer.lex">
 		  <Output>Grammar4\Scanner.cs</Output>
+		</Gplex>
+		<Gplex Include="Grammar5\my_lexer.lex">
+		  <Output>Grammar5\Scanner.cs</Output>
 		</Gplex>
 	</ItemGroup>
 <!--
