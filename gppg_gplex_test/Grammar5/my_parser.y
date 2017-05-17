@@ -14,6 +14,7 @@
 %token DQUOTE
 %token DSTRING
 %token WORD
+%token SSLENGINE, ON, VIRTUALHOST, SERVERNAME
 
 %union { 
 		public int iVal;
@@ -21,6 +22,15 @@
 }
 
 %start content
+
+%{
+class VirtualHostInfo
+{
+	public bool IsSSLEnabled;
+	public string DomainName;
+}
+List<VirtualHostInfo> hosts = new List<VirtualHostInfo>();
+%}
 
 %% //Grammar Rules Section
 
@@ -38,7 +48,7 @@ string
 	;
 
 word
-	: WORD { Console.Write($<sVal>1); }
+	: WORD { /*Console.Write($<sVal>1);*/ }
 	;
 
 iws 
@@ -98,24 +108,37 @@ parts
     | lsb_spaces section
     | lsb_spaces section iws
     ;
+
 lsb_spaces
 	: lsb
 	| lsb iws
 	;
+
 instruction
 	: word
 	| word iws instruction_parameters
+	| ssl_engine_instruction
+	| server_name_instruction
+	;
+
+ssl_engine_instruction
+	: SSLENGINE iws ON { SslEngineActivated(); }
+	;
+
+server_name_instruction
+	: SERVERNAME iws instruction_parameters { ServerNameSet($3.sVal); }
 	;
 
 instruction_parameters
-	: instruction_word
-	| instruction_word iws instruction_parameters
+	: instruction_parameters_word
+	| instruction_parameters_word iws instruction_parameters
 	;
 
-instruction_word
+instruction_parameters_word
 	: word
 	| path
 	| string
+	| ON
 	;
 
 path
@@ -135,6 +158,11 @@ section_start
 	: word rsb eol
 	| word iws rsb eol
 	| word iws nonspace_section_parameters eol
+	| virtualhost_section_start
+	;
+
+virtualhost_section_start
+	: VIRTUALHOST iws nonspace_section_parameters eol { VirtualHostStart(); }
 	;
 
 section_content
@@ -188,13 +216,54 @@ parameters_word
 	;
 
 section_end
-	: forwardslash iws word iws rsb
-	| forwardslash iws word rsb
-	| forwardslash word iws rsb
-	| forwardslash word rsb
+	: forwardslash iws section_end_word iws rsb
+	| forwardslash iws section_end_word rsb
+	| forwardslash section_end_word iws rsb
+	| forwardslash section_end_word rsb
+	;
+
+section_end_word
+	: word
+	| VIRTUALHOST { VirtualHostEnd(); }
 	;
 
 %% // User-code Section
 
 // Don't forget to declare the Parser-Constructor
 public Parser(Scanner scnr) : base(scnr) { }
+
+void SslEngineActivated()
+{
+	Console.WriteLine("SSLEngine activated");
+	hosts[hosts.Count-1].IsSSLEnabled = true;
+}
+
+void ServerNameSet(string name)
+{
+	Console.WriteLine("ServerName {0}", name);
+	hosts[hosts.Count-1].DomainName = name;
+}
+
+void VirtualHostStart()
+{
+	hosts.Add(new VirtualHostInfo());
+	Console.WriteLine("VirtualHostStart");
+}
+
+void VirtualHostEnd()
+{
+	Console.WriteLine("VirtualHostEnd");
+}
+
+public IEnumerable<string> GetHosts()
+{
+	var res = new List<string>();
+	for (int i = 0; i < hosts.Count; i++)
+	{
+		if (hosts[i].IsSSLEnabled)
+		{
+			res.Add(hosts[i].DomainName);
+		}
+	}
+	return res;
+}

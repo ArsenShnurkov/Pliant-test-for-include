@@ -33,6 +33,11 @@ namespace NCParser
 			var parser = new Grammar5.Parser(scanner);
 			if (parser.Parse())
 			{
+				var res = parser.GetHosts();
+				foreach (string s in res)
+				{
+					Console.WriteLine(s);
+				}
 				Console.WriteLine("Success");
 			}
 			else
